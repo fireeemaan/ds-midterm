@@ -7,6 +7,8 @@ per section.
 **Isi:** 8 section materi, 125 soal pilihan ganda, GSAP + ScrollTrigger, tanpa build
 step untuk dipakai (cukup buka `index.html`).
 
+**Demo:** https://fireeemaan.github.io/ds-midterm/
+
 ## Menjalankan
 
 ```bash
