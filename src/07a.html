@@ -1,0 +1,250 @@
+<!-- ============================================================
+     UNIT 7 (bagian 1) — MEMBANGUN MODEL
+     ============================================================ -->
+<section class="unit" id="u7" data-unit="7">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">07</span>
+        <span class="unit-tag">Judul Unit<br>Label &amp; Model</span>
+      </div>
+      <h2>Membangun <span class="grad-text">Model</span></h2>
+      <p class="lead">
+        Model adalah representasi matematis atau algoritmik dari proses belajar berdasarkan data,
+        dipakai untuk membuat prediksi atau keputusan. Ia dibangun dengan menganalisis pola pada
+        data latih, lalu dipakai pada data baru yang belum pernah dilihat.
+      </p>
+    </header>
+
+    <!-- label data -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.6rem">Sebelum Model: Menentukan Label Data</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Dalam <em>supervised learning</em>, <strong>label</strong> adalah target — hasil yang ingin diprediksi.
+      Fitur adalah variabel independen, label adalah variabel dependen.
+    </p>
+
+    <div class="grid g3" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">JENIS 1</div>
+        <h4>Binary Labels</h4>
+        <p class="small">Dua nilai: 0/1, Ya/Tidak, True/False.</p>
+        <p class="tiny muted">Contoh: apakah email ini spam?</p>
+        <span class="chip cy">Logistic Regression</span>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">JENIS 2</div>
+        <h4>Multi-Class Labels</h4>
+        <p class="small">Lebih dari dua kategori yang saling eksklusif.</p>
+        <p class="tiny muted">Contoh: kucing, anjing, burung.</p>
+        <span class="chip vi">Random Forest</span>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">JENIS 3</div>
+        <h4>Continuous Labels</h4>
+        <p class="small">Nilai numerik kontinu, tak terbatas pada kategori.</p>
+        <p class="tiny muted">Contoh: harga rumah.</p>
+        <span class="chip am">Linear Regression</span>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Mengapa Label Penting?</h4>
+        <ul class="clean small">
+          <li><strong>Panduan model</strong> — label memberi tahu algoritma hubungan input→output yang dicari.</li>
+          <li><strong>Evaluasi kinerja</strong> — tanpa label tidak ada cara mengukur seberapa baik prediksi.</li>
+          <li><strong>Pelatihan &amp; validasi</strong> — label dipakai menyesuaikan bobot, lalu menguji akurasi.</li>
+        </ul>
+        <div class="callout warn" style="margin-top:.8rem">
+          Label yang salah atau bias akan diwarisi model. Ini alasan quality control pada pelabelan
+          sama pentingnya dengan pemilihan algoritma.
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Tiga Langkah Identifikasi Label</h4>
+        <ol class="steps small">
+          <li><strong>Pahami tujuan</strong> — jika tujuannya memprediksi harga rumah, labelnya adalah harga rumah.</li>
+          <li><strong>Tinjau dataset</strong> — lihat kolom yang ada dan pahami tipe data tiap kolom.</li>
+          <li><strong>Pilih kolom yang sesuai</strong> — kolom itu harus relevan dengan tujuan prediksi.</li>
+        </ol>
+        <p class="small muted" style="margin-top:.7rem">
+          Contoh dataset perumahan: <span class="mono">luas_rumah</span>, <span class="mono">jumlah_kamar_tidur</span>
+          → fitur; <span class="mono">harga_rumah</span> → label.
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="table-wrap">
+        <table class="dt">
+          <thead><tr><th>Tipe Tugas</th><th>Definisi</th><th>Contoh</th><th>Algoritma</th><th>Metrik</th></tr></thead>
+          <tbody>
+            <tr><td>Binary Classification</td><td>2 kategori</td><td>Churn, fraud, spam</td><td>Logistic Regression, Decision Tree, NN</td><td>Accuracy, Precision, Recall, F1, ROC-AUC</td></tr>
+            <tr><td>Multi-Class</td><td>3+ kategori eksklusif</td><td>Kategori produk, segmen pelanggan</td><td>Random Forest, SVM, NN</td><td>Accuracy, macro/micro F1, confusion matrix</td></tr>
+            <tr><td>Multi-Label</td><td>Satu instance, banyak label</td><td>Genre film, tag produk</td><td>Binary Relevance, Classifier Chains</td><td>Hamming loss, subset accuracy, Jaccard</td></tr>
+            <tr><td>Regression</td><td>Nilai kontinu</td><td>Penjualan, harga rumah, LTV</td><td>Linear Regression, RF Regressor, XGBoost</td><td>MAE, MSE, RMSE, R², MAPE</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- apa itu model -->
+    <div class="grid g-1-2" style="margin-bottom:1.6rem; align-items:start">
+      <div class="card card-accent v reveal" data-anim="up">
+        <div class="card-num">DEFINISI</div>
+        <h4>Apa Itu Model Machine Learning?</h4>
+        <p class="small">
+          Program atau algoritma yang dirancang mengenali pola dalam data. Model dilatih dengan
+          data historis untuk memetakan <strong>input (fitur)</strong> ke <strong>output (label)</strong>,
+          lalu dipakai memprediksi data baru.
+        </p>
+        <p class="small">
+          Contoh sederhana: model pengenal gambar anjing/kucing memakai pola dari gambar berlabel
+          untuk menentukan kelas gambar baru.
+        </p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Peran Model di Data Science &amp; AI</h4>
+        <div class="grid g2" style="gap:.9rem; margin-top:.5rem">
+          <div>
+            <h4 style="font-size:.86rem; color:var(--cyan)">Data Science</h4>
+            <p class="tiny">Pengambilan keputusan berbasis data: memprediksi tren penjualan, mengotomatisasi
+              klasifikasi teks, prediksi churn, deteksi anomali transaksi.</p>
+          </div>
+          <div>
+            <h4 style="font-size:.86rem; color:var(--violet)">Artificial Intelligence</h4>
+            <p class="tiny">Memberi "kecerdasan" pada sistem: mengenali wajah, berbicara dalam bahasa manusia,
+              bermain game. Model juga memungkinkan adaptasi dari data yang terus diperbarui.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- lifecycle -->
+    <div class="viz reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="viz-head">
+        <div class="viz-title">Siklus Pengembangan Model: Data Mentah → Prediksi</div>
+        <div class="viz-note">delapan tahap, berulang</div>
+      </div>
+
+      <div class="flowmap">
+        <div class="flow-row">
+          <div class="flow-node on"><b>01</b>Pengumpulan<br>Data</div><span class="flow-arrow">→</span>
+          <div class="flow-node"><b>02</b>Pre-processing</div><span class="flow-arrow">→</span>
+          <div class="flow-node"><b>03</b>Pemilihan<br>Model</div><span class="flow-arrow">→</span>
+          <div class="flow-node"><b>04</b>Training</div>
+        </div>
+        <div class="flow-row">
+          <div class="flow-node"><b>08</b>Monitoring &amp;<br>Pemeliharaan</div><span class="flow-arrow">←</span>
+          <div class="flow-node"><b>07</b>Deployment</div><span class="flow-arrow">←</span>
+          <div class="flow-node"><b>06</b>Fine-tuning<br>&amp; Optimasi</div><span class="flow-arrow">←</span>
+          <div class="flow-node"><b>05</b>Evaluasi<br>Model</div>
+        </div>
+      </div>
+
+      <div class="grid g4" style="margin-top:1.1rem; gap:.7rem">
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>1. Pengumpulan</strong> — data relevan dari berbagai sumber, terstruktur maupun tidak.</p></div>
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>2. Pre-processing</strong> — bersihkan, tangani missing, normalisasi, encoding, split train/test.</p></div>
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>3. Pemilihan model</strong> — regresi untuk nilai kontinu, klasifikasi untuk kategori.</p></div>
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>4. Training</strong> — model mempelajari hubungan fitur → label.</p></div>
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>5. Evaluasi</strong> — ukur pada data uji; pastikan tidak overfitting.</p></div>
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>6. Fine-tuning</strong> — tuning hyperparameter, perbaiki fitur.</p></div>
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>7. Deployment</strong> — pakai di produksi untuk data baru.</p></div>
+        <div class="card" style="padding:.85rem"><p class="tiny" style="margin:0"><strong>8. Monitoring</strong> — pantau performa; latih ulang bila data berubah.</p></div>
+      </div>
+
+      <div class="viz-caption">
+        Tahap 5–6 hampir selalu berulang beberapa kali. Tahap 8 sering diabaikan pemula, padahal
+        di sinilah model yang "bagus saat demo" bisa perlahan memburuk di produksi
+        (<em>data drift</em>).
+      </div>
+    </div>
+
+    <!-- supervised vs unsupervised -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:1rem">Empat Paradigma Pembelajaran</h3>
+
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">PARADIGMA 1</div>
+        <h4>Supervised Learning</h4>
+        <p class="small">
+          Model dilatih dengan data yang <strong>sudah berlabel</strong>. Model belajar hubungan
+          input→output sehingga bisa memprediksi output untuk data baru.
+        </p>
+        <div class="chiprow" style="margin-top:.5rem">
+          <span class="chip cy">Regresi</span>
+          <span class="chip cy">Klasifikasi</span>
+        </div>
+        <p class="small" style="margin-top:.8rem">
+          <strong>Regresi</strong> memprediksi nilai numerik kontinu (harga, berat, suhu).
+          Contoh: dari luas bangunan, jumlah kamar, dan lokasi → prediksi harga rumah Rp500 juta.
+        </p>
+        <p class="small">
+          <strong>Klasifikasi</strong> memprediksi kategori. Contoh: email masuk "spam" atau "bukan spam".
+        </p>
+      </div>
+
+      <div class="card card-accent v reveal" data-anim="up">
+        <div class="card-num">PARADIGMA 2</div>
+        <h4>Unsupervised Learning</h4>
+        <p class="small">
+          Data <strong>tanpa label</strong>. Tujuannya menemukan pola tersembunyi atau struktur:
+          <em>clustering</em>, asosiasi, dan pengurangan dimensi.
+        </p>
+        <p class="small">
+          <strong>Contoh kasus:</strong> perusahaan ingin mengelompokkan pelanggan berdasarkan perilaku
+          belanja, tetapi belum tahu kategori apa yang ada. Unsupervised learning menemukan kelompok
+          pelanggan dengan perilaku serupa.
+        </p>
+        <div class="callout" style="margin-top:.7rem">
+          Perbedaan kunci: supervised menjawab <em>"berapa/jenis apa?"</em>,
+          unsupervised menjawab <em>"ada kelompok apa di data ini?"</em>.
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2.2rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">PARADIGMA 3</div>
+        <h4>Self-Supervised Learning</h4>
+        <p class="small">
+          Model dilatih memakai <strong>sinyal pengawasan yang dihasilkan dari data itu sendiri</strong>,
+          bukan label dari manusia. Data biasanya diaugmentasi atau ditransformasi sehingga terbentuk
+          pasangan sampel: satu sebagai input, satu sebagai target.
+        </p>
+        <p class="small">
+          Dua langkah: (1) selesaikan <em>pretext task</em> dengan <em>pseudo-label</em> untuk
+          menginisialisasi parameter, (2) lakukan tugas sebenarnya dengan supervised/unsupervised learning.
+        </p>
+        <p class="tiny muted">
+          Contoh: <em>masked language modeling</em> (menebak kata yang disembunyikan),
+          <em>contrastive learning</em> (memaksimalkan kemiripan pasangan gambar yang sama),
+          autoencoder (merekonstruksi input).
+        </p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">PARADIGMA 4</div>
+        <h4>Reinforcement Learning</h4>
+        <p class="small">
+          Agen belajar melalui <strong>interaksi</strong> dengan lingkungan: mengambil aksi, menerima
+          <em>reward</em> atau <em>penalty</em>, lalu menyesuaikan strategi (policy) untuk memaksimalkan
+          reward kumulatif.
+        </p>
+        <p class="small">
+          Tidak ada label "jawaban benar" — yang ada hanya umpan balik dari konsekuensi tindakan.
+        </p>
+        <p class="tiny muted">
+          Contoh: agen bermain game, robot navigasi, penjadwalan sumber daya, optimasi rekomendasi.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout key reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <strong>Cara memilih paradigma:</strong> punya label? → supervised. Tidak punya, ingin menemukan
+      struktur? → unsupervised. Punya banyak data mentah tetapi label mahal? → self-supervised
+      (lalu fine-tune). Belajar lewat aksi dan konsekuensi? → reinforcement learning.
+    </div>

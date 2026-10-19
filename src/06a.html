@@ -1,0 +1,306 @@
+<!-- ============================================================
+     UNIT 6 (bagian 1) — MENGKONSTRUKSI DATA
+     ============================================================ -->
+<section class="unit" id="u6" data-unit="6">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">06</span>
+        <span class="unit-tag">Judul Unit<br>Mengkonstruksi Data</span>
+      </div>
+      <h2>Mengkonstruksi Data<br><span class="grad-text">(Feature Engineering)</span></h2>
+      <p class="lead">
+        Mengkonstruksi data adalah proses memodifikasi dan menyiapkan data mentah agar lebih siap
+        dipakai untuk analisis atau pemodelan — melalui <strong>transformasi data</strong>,
+        <strong>rekayasa fitur</strong>, dan <strong>agregasi</strong>.
+      </p>
+    </header>
+
+    <div class="callout key reveal" data-anim="up" style="margin-bottom:2rem">
+      <strong>"Applied machine learning is basically feature engineering."</strong> — Andrew Ng.
+      Kalimat ini merangkum satu kenyataan: dengan algoritma yang sama, kualitas fitur sering
+      menentukan selisih antara model biasa dan model yang benar-benar berguna.
+    </div>
+
+    <div class="grid g3" style="margin-bottom:2rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">KOMPONEN 1</div>
+        <h4>Transformasi Data</h4>
+        <p class="small">
+          Mengubah data dari satu format/skala ke format lain: normalisasi agar skala seragam,
+          atau transformasi logaritmik untuk mengurangi kemiringan.
+        </p>
+      </div>
+      <div class="card card-accent v reveal" data-anim="up">
+        <div class="card-num">KOMPONEN 2</div>
+        <h4>Rekayasa Fitur</h4>
+        <p class="small">
+          Menciptakan fitur baru dari data yang ada — menggabungkan fitur, membuat fitur derivatif,
+          atau mengurangi jumlah fitur dengan teknik seperti PCA.
+        </p>
+      </div>
+      <div class="card card-accent a reveal" data-anim="up">
+        <div class="card-num">KOMPONEN 3</div>
+        <h4>Agregasi Data</h4>
+        <p class="small">
+          Mengelompokkan dan merangkum: rata-rata harga rumah per kota, jumlah transaksi per bulan —
+          untuk melihat tren yang lebih besar.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:2.2rem">
+      <div class="card reveal" data-anim="up">
+        <h4>1 · Meningkatkan Akurasi Model</h4>
+        <p class="small">
+          Fitur yang relevan menambah informasi yang tidak ada pada fitur asli. Contoh: menambahkan
+          <span class="mono">price_per_sqft</span> memberi model informasi yang tidak diperoleh dari
+          harga atau luas secara terpisah. Normalisasi/standardisasi juga membuat model bekerja lebih efisien.
+        </p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>2 · Mempersiapkan Data untuk Analisis</h4>
+        <p class="small">
+          Transformasi menyelaraskan format sehingga analisis konsisten. Contoh: menyeragamkan format
+          tanggal, lalu membuat <span class="mono">sales_quarter</span> untuk melihat pola musiman.
+          Rekayasa fitur juga mengurangi <em>noise</em>.
+        </p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>3 · Mengurangi Kompleksitas</h4>
+        <p class="small">
+          Reduksi dimensionalitas (PCA, pemilihan fitur) memangkas jumlah fitur tanpa kehilangan
+          informasi penting, sehingga komputasi lebih ringan dan model lebih mudah dipahami.
+          Agregasi juga menyederhanakan dataset.
+        </p>
+      </div>
+    </div>
+
+    <!-- scaling -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.6rem">Normalisasi vs Standardisasi</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Keduanya menyamakan skala, tetapi tujuannya berbeda. Pilih berdasarkan algoritma dan bentuk distribusi.
+    </p>
+
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Normalisasi (Min–Max)</h4>
+        <p class="small">Mengubah data ke rentang seragam, biasanya 0 sampai 1.</p>
+        <div class="formula" style="margin:.7rem 0">
+          <span>x' =</span>
+          <span class="frac"><span class="num">x − x<sub>min</sub></span><span class="den">x<sub>max</sub> − x<sub>min</sub></span></span>
+        </div>
+        <p class="small">
+          <strong>Kapan:</strong> ketika skala variabel berbeda jauh dan semua fitur harus berkontribusi merata.
+          Cocok untuk <strong>KNN</strong> dan <strong>neural network</strong>.
+        </p>
+        <div class="callout warn" style="margin-top:.7rem">
+          Sensitif terhadap outlier: satu nilai ekstrem bisa "memampatkan" seluruh data lain ke ujung rentang.
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Standardisasi (Z-Score)</h4>
+        <p class="small">Mengubah data agar memiliki mean 0 dan standar deviasi 1.</p>
+        <div class="formula" style="margin:.7rem 0">
+          <span>z =</span>
+          <span class="frac"><span class="num">x − μ</span><span class="den">σ</span></span>
+        </div>
+        <p class="small">
+          <strong>Kapan:</strong> data berdistribusi normal atau hampir normal, dan algoritma butuh data
+          terpusat di sekitar rata-rata. Cocok untuk <strong>SVM, regresi, PCA</strong>.
+        </p>
+        <div class="callout" style="margin-top:.7rem">
+          Z-score menunjukkan jarak dari rata-rata dalam satuan standar deviasi: negatif = di bawah rata-rata,
+          positif = di atas rata-rata.
+        </div>
+      </div>
+    </div>
+
+    <div class="viz reveal" data-anim="up" style="margin-bottom:1.4rem">
+      <div class="viz-head">
+        <div class="viz-title">Efek Scaling pada Sebaran Nilai</div>
+        <div class="viz-note">dua fitur dengan satuan berbeda</div>
+      </div>
+
+      <div style="display:grid; gap:1.1rem">
+        <div>
+          <div class="viz-note" style="margin-bottom:.35rem">Sebelum — Harga (Rp) vs Jumlah Terjual</div>
+          <div class="scale-lane" id="lane-raw"></div>
+        </div>
+        <div>
+          <div class="viz-note" style="margin-bottom:.35rem">Sesudah Min–Max — keduanya di rentang 0–1</div>
+          <div class="scale-lane" id="lane-scaled"></div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <span><i style="background:#ffb454"></i>Harga</span>
+        <span><i style="background:#4fd8e8"></i>Jumlah terjual</span>
+      </div>
+
+      <div class="viz-caption">
+        Tanpa scaling, fitur dengan angka besar (harga jutaan) mendominasi perhitungan jarak, sehingga
+        fitur dengan angka kecil (jumlah unit) praktis diabaikan model. Min–Max menyetarakan keduanya.
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2.2rem">
+      <div class="reveal" data-anim="up">
+        <div class="table-wrap">
+          <table class="dt">
+            <thead><tr><th>Produk</th><th>Harga (Rp)</th><th>Terjual</th><th>Harga Norm.</th><th>Terjual Norm.</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>10</td><td>100</td><td>0.00</td><td>0.00</td></tr>
+              <tr><td>B</td><td>30</td><td>300</td><td>0.40</td><td>0.40</td></tr>
+              <tr><td>C</td><td>60</td><td>600</td><td>1.00</td><td>1.00</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:.6rem">
+          Contoh materi: A = (10−10)/(60−10) = 0.00; B = (30−10)/50 = 0.40; C = 1.00.
+        </p>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="table-wrap">
+          <table class="dt">
+            <thead><tr><th>Mahasiswa</th><th>Nilai</th><th>Mean kelas</th><th>Std. dev</th><th>Z-score</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>60</td><td>75</td><td>10</td><td>−1.5</td></tr>
+              <tr><td>B</td><td>75</td><td>75</td><td>10</td><td>0.0</td></tr>
+              <tr><td>C</td><td>90</td><td>75</td><td>10</td><td>1.5</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:.6rem">
+          (60−75)/10 = −1.5 artinya nilai A berada 1,5 standar deviasi <em>di bawah</em> rata-rata kelas.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2.2rem">
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>minmax_scaler.py</div>
+        <pre class="code"><span class="k">from</span> sklearn.preprocessing <span class="k">import</span> MinMaxScaler
+
+df = pd.<span class="f">DataFrame</span>({
+    <span class="s">"Produk"</span>: [<span class="s">"A"</span>, <span class="s">"B"</span>, <span class="s">"C"</span>],
+    <span class="s">"Harga (Rp)"</span>: [10, 30, 60],
+    <span class="s">"Jumlah Terjual"</span>: [100, 300, 600]
+})
+
+scaler = <span class="f">MinMaxScaler</span>()
+kolom = [<span class="s">"Harga (Rp)"</span>, <span class="s">"Jumlah Terjual"</span>]
+hasil = scaler.<span class="f">fit_transform</span>(df[kolom])
+
+df[<span class="s">"Harga Normalisasi"</span>] = hasil[:, 0]
+df[<span class="s">"Jumlah Normalisasi"</span>] = hasil[:, 1]
+<span class="f">print</span>(df.<span class="f">to_string</span>(index=<span class="k">False</span>))</pre>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>standard_scaler.py</div>
+        <pre class="code"><span class="k">from</span> sklearn.preprocessing <span class="k">import</span> StandardScaler
+
+df = pd.<span class="f">DataFrame</span>({
+    <span class="s">"Mahasiswa"</span>: [<span class="s">"A"</span>, <span class="s">"B"</span>, <span class="s">"C"</span>],
+    <span class="s">"Nilai"</span>: [60, 75, 90]
+})
+
+rata_rata = df[<span class="s">"Nilai"</span>].<span class="f">mean</span>()
+std_dev = df[<span class="s">"Nilai"</span>].<span class="f">std</span>(ddof=0)
+
+scaler = <span class="f">StandardScaler</span>()
+df[<span class="s">"Z-Score"</span>] = scaler.<span class="f">fit_transform</span>(df[[<span class="s">"Nilai"</span>]])
+
+df[<span class="s">"Rata-rata kelas"</span>] = rata_rata
+df[<span class="s">"Std. deviasi"</span>] = std_dev
+<span class="f">print</span>(df.<span class="f">round</span>(2))</pre>
+      </div>
+    </div>
+
+    <!-- log transform -->
+    <div class="grid g-1-2" style="margin-bottom:2.2rem; align-items:start">
+      <div class="card card-accent a reveal" data-anim="up">
+        <div class="card-num">TRANSFORMASI LOGARITMIK</div>
+        <h4>Mengkompresi Rentang yang Sangat Lebar</h4>
+        <p class="small">
+          Data transaksi sering <em>right-skewed</em>: mayoritas nilai kecil, sedikit nilai sangat besar.
+          Logaritma memperkecil jarak antar nilai besar sehingga distribusi lebih simetris.
+        </p>
+        <div class="table-wrap" style="margin-top:.7rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Produk</th><th>Transaksi</th><th>log10(x)</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>10</td><td>1.000</td></tr>
+              <tr><td>B</td><td>100</td><td>2.000</td></tr>
+              <tr><td>C</td><td>1.000</td><td>3.000</td></tr>
+              <tr><td>D</td><td>10.000</td><td>4.000</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:.6rem">
+          Setiap kenaikan 10× hanya menambah 1 pada skala log — inilah inti "kompresi"-nya.
+        </p>
+      </div>
+
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Kurva log<sub>10</sub>(x)</div>
+          <div class="viz-note">nilai besar terkompresi</div>
+        </div>
+        <svg viewBox="0 0 520 250" id="log-svg" role="img" aria-label="Kurva logaritma basis 10 pada sumbu x linear">
+          <g stroke="#1c2540" stroke-width="1">
+            <line x1="60" y1="200" x2="490" y2="200"/>
+            <line x1="60" y1="40" x2="60" y2="200"/>
+            <line x1="60" y1="160" x2="490" y2="160" stroke-dasharray="3 4"/>
+            <line x1="60" y1="120" x2="490" y2="120" stroke-dasharray="3 4"/>
+            <line x1="60" y1="80" x2="490" y2="80" stroke-dasharray="3 4"/>
+          </g>
+
+          <!-- penanda: 1.000 sudah hanya 10% lebar sumbu -->
+          <line x1="103" y1="80" x2="103" y2="200" stroke="#ffb454" stroke-width="1" stroke-dasharray="3 4" opacity=".45"/>
+          <text x="108" y="74" font-family="Inter, sans-serif" font-size="8.5" fill="#ffb454" opacity=".85">x = 1.000 → 10% sumbu</text>
+
+          <path class="log-curve"
+                d="M60.0,200.0 L60.1,193.0 L60.1,188.0 L60.1,180.9 L60.2,172.0 L60.3,166.2 L60.4,160.0 L60.6,153.0 L61.1,144.1 L61.7,135.9 L62.6,128.9 L64.3,120.0 L66.9,111.8 L70.8,104.1 L77.2,95.9 L85.8,88.9 L103.0,80.0 L128.8,71.8 L167.5,64.1 L232.0,55.9 L318.0,48.9 L490.0,40.0"
+                fill="none" stroke="#ffb454" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <g font-family="JetBrains Mono, monospace" font-size="9" fill="#5d6a8a">
+            <text x="52" y="203" text-anchor="end">0</text>
+            <text x="52" y="163" text-anchor="end">1</text>
+            <text x="52" y="123" text-anchor="end">2</text>
+            <text x="52" y="83" text-anchor="end">3</text>
+            <text x="52" y="43" text-anchor="end">4</text>
+            <text x="60" y="216" text-anchor="middle">0</text>
+            <text x="167.5" y="216" text-anchor="middle">2.500</text>
+            <text x="275" y="216" text-anchor="middle">5.000</text>
+            <text x="382.5" y="216" text-anchor="middle">7.500</text>
+            <text x="490" y="216" text-anchor="middle">10.000</text>
+          </g>
+          <text x="275" y="238" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#8492b4">x (nilai asli, skala linear)</text>
+          <text transform="translate(20,120) rotate(-90)" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#8492b4">log10(x)</text>
+        </svg>
+        <div class="viz-caption">
+          Logaritma berguna untuk variabel seperti pendapatan, jumlah transaksi, dan populasi.
+          Perhatikan: ia tidak bisa dipakai pada nilai 0 atau negatif tanpa penyesuaian
+          (<span class="mono">log1p</span> = log(1+x) mengatasi nol).
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>log_transform.py</div>
+      <pre class="code">df = pd.<span class="f">DataFrame</span>({
+    <span class="s">"Produk"</span>: [<span class="s">"A"</span>, <span class="s">"B"</span>, <span class="s">"C"</span>, <span class="s">"D"</span>],
+    <span class="s">"Transaksi asli"</span>: [10, 100, 1000, 10000]
+})
+
+df[<span class="s">"log10(x)"</span>] = np.<span class="f">log10</span>(df[<span class="s">"Transaksi asli"</span>])
+<span class="f">print</span>(df.<span class="f">to_string</span>(index=<span class="k">False</span>))
+
+<span class="c"># Jika ada nilai 0, gunakan log1p</span>
+<span class="c"># df["log"] = np.log1p(df["Transaksi asli"])</span></pre>
+    </div>

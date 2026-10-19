@@ -1,0 +1,6 @@
+# Normalisasi akhir baris agar diff tidak berisik antar OS
+* text=auto eol=lf
+
+# Biner
+*.png binary
+*.woff2 binary

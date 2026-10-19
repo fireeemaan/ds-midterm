@@ -1,0 +1,165 @@
+    <div class="rule"></div>
+
+    <h2 class="reveal" data-anim="up" style="font-size:clamp(1.7rem,2.9vw,2.3rem); margin-bottom:.7rem">Memvalidasi Data</h2>
+    <p class="lead reveal" data-anim="up" style="max-width:78ch; margin-bottom:1.8rem">
+      Validasi data adalah proses memastikan data yang dipakai dalam analisis atau model
+      memenuhi kriteria kualitas: <strong>akurat, konsisten, dan lengkap</strong>.
+      Tanpa validasi, model bisa dilatih di atas data yang tampak rapi tetapi secara diam-diam salah.
+    </p>
+
+    <div class="grid g4" style="margin-bottom:1.8rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">DIMENSI 1</div><h4>Validity</h4>
+        <p class="small">Nilai sesuai aturan/constraint: tipe data, rentang, wajib isi, unik, keanggotaan himpunan, foreign key, pola regex, dan validasi lintas kolom.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">DIMENSI 2</div><h4>Accuracy</h4>
+        <p class="small">Kedekatan nilai dengan kenyataan. Paling sulit diperbaiki karena butuh sumber "gold standard" eksternal.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">DIMENSI 3</div><h4>Completeness</h4>
+        <p class="small">Semua ukuran yang wajib diketahui benar-benar terisi. Ketiadaan data tidak bisa "ditebak" tanpa asumsi.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">DIMENSI 4</div><h4>Consistency &amp; Uniformity</h4>
+        <p class="small">Tidak ada dua nilai yang saling bertentangan, dan satuan/format seragam di semua sistem (kg vs pound, DD-MM vs MM-DD).</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:1.8rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <h4>Jenis Validasi yang Umum</h4>
+        <ul class="clean small">
+          <li><strong>Tipe data</strong> — kolom numerik tidak boleh berisi teks seperti "tiga puluh".</li>
+          <li><strong>Rentang</strong> — usia tidak boleh −5 atau 150.</li>
+          <li><strong>Wajib isi</strong> — kolom kunci tidak boleh kosong.</li>
+          <li><strong>Keunikan</strong> — ID pelanggan tidak boleh ganda.</li>
+          <li><strong>Format</strong> — email, nomor HP, tanggal mengikuti pola tertentu.</li>
+          <li><strong>Lintas kolom</strong> — tanggal lahir tidak boleh di masa depan; usia harus konsisten dengan tanggal lahir.</li>
+        </ul>
+      </div>
+
+      <div class="card card-accent a reveal" data-anim="up">
+        <h4>Bagaimana Mengatasi Masalahnya?</h4>
+        <ul class="clean am small">
+          <li><strong>Koreksi langsung</strong> — perbaiki format (mis. <span class="mono">0812-3456-7890</span> → <span class="mono">081234567890</span>).</li>
+          <li><strong>Imputasi</strong> — isi nilai hilang dengan mean/median/mode, atau model (KNN, regresi).</li>
+          <li><strong>Hapus</strong> — buang baris duplikat atau kolom dengan mayoritas kosong.</li>
+          <li><strong>Tandai, jangan tebak</strong> — jika kebenaran tidak bisa diketahui, simpan status <span class="mono">unknown</span> alih-alih mengarang nilai.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:1.8rem">
+      <h4 style="margin-bottom:.5rem">Contoh Data Kotor dan Penandaan Masalahnya</h4>
+      <div class="table-wrap">
+        <table class="dq-table">
+          <thead>
+            <tr><th>CustomerID</th><th>Email</th><th>Phone</th><th>Age</th><th>BirthDate</th><th>Salary</th><th>Membership</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td class="ok">budi@email.com</td><td class="ok">081234567890</td><td class="ok">25</td><td class="ok">1998-01-15</td><td class="ok">5000000</td><td class="ok">Gold</td></tr>
+            <tr><td>2</td><td class="ok">ani.wijaya@email.com</td><td class="bad">08223456789</td><td class="bad">-5</td><td class="ok">2030-05-20</td><td class="ok">3000000</td><td class="ok">Silver</td></tr>
+            <tr><td>3</td><td class="bad">invalid-email</td><td class="bad">08123</td><td class="bad">150</td><td class="bad">1873-03-10</td><td class="bad">-1000000</td><td class="bad">Platinum</td></tr>
+            <tr><td>4</td><td class="ok">doni@email.com</td><td class="bad">081345678901234</td><td class="ok">30</td><td class="ok">1993-06-05</td><td class="ok">8000000</td><td class="bad">Bronze</td></tr>
+            <tr><td>10</td><td class="miss">(kosong)</td><td class="ok">081234567890</td><td class="ok">25</td><td class="ok">1998-07-10</td><td class="ok">5500000</td><td class="ok">Silver</td></tr>
+            <tr><td>10</td><td class="bad">irma@email.com</td><td class="ok">081234567890</td><td class="ok">25</td><td class="ok">1998-07-10</td><td class="ok">5500000</td><td class="ok">Silver</td></tr>
+            <tr><td>12</td><td class="ok">kiki@email.com</td><td class="ok">081234567890</td><td class="bad">"tiga puluh"</td><td class="bad">invalid-date</td><td class="ok">10000000</td><td class="bad">VIP</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted" style="margin-top:.6rem">
+        Merah = melanggar aturan validasi · abu-abu = nilai hilang · <strong>CustomerID 10 muncul dua kali</strong>
+        (duplikasi kunci) · <strong>Membership</strong> berisi nilai di luar himpunan sah
+        (Gold, Silver, Platinum, Bronze).
+      </p>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:1.8rem">
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>validate_email.py</div>
+        <pre class="code"><span class="k">import</span> re
+
+<span class="k">def</span> <span class="f">validate_email</span>(email):
+    <span class="s">"""Validasi format email menggunakan regex"""</span>
+    <span class="k">if</span> pd.<span class="f">isna</span>(email) <span class="k">or</span> email == <span class="s">''</span>:
+        <span class="k">return</span> <span class="k">False</span>
+    pattern = <span class="s">r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'</span>
+    <span class="k">return</span> <span class="f">bool</span>(re.<span class="f">match</span>(pattern, <span class="f">str</span>(email)))
+
+df_customers[<span class="s">'Email_Valid'</span>] = df_customers[<span class="s">'Email'</span>].<span class="f">apply</span>(validate_email)
+invalid = df_customers[~df_customers[<span class="s">'Email_Valid'</span>]]
+
+<span class="k">if</span> <span class="f">len</span>(invalid) &gt; 0:
+    <span class="f">print</span>(<span class="s">f"Ditemukan {len(invalid)} email tidak valid"</span>)
+    <span class="f">print</span>(invalid[[<span class="s">'CustomerID'</span>, <span class="s">'Name'</span>, <span class="s">'Email'</span>]])</pre>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>cross_field_check.py</div>
+        <pre class="code"><span class="c"># Konversi BirthDate, lalu hitung usia dari tanggal</span>
+df_customers[<span class="s">'BirthDate_dt'</span>] = pd.<span class="f">to_datetime</span>(
+    df_customers[<span class="s">'BirthDate'</span>], errors=<span class="s">'coerce'</span>)
+
+current_year = datetime.now().year
+df_customers[<span class="s">'CalculatedAge'</span>] = (
+    current_year - df_customers[<span class="s">'BirthDate_dt'</span>].dt.year)
+
+df_customers[<span class="s">'Age_numeric'</span>] = pd.<span class="f">to_numeric</span>(
+    df_customers[<span class="s">'Age'</span>], errors=<span class="s">'coerce'</span>)
+
+<span class="c"># Toleransi 1 tahun untuk pembulatan</span>
+df_customers[<span class="s">'Age_Consistent'</span>] = (
+    <span class="f">abs</span>(df_customers[<span class="s">'Age_numeric'</span>]
+        - df_customers[<span class="s">'CalculatedAge'</span>]) &lt;= 1)
+
+inconsistent = df_customers[
+    (~df_customers[<span class="s">'Age_Consistent'</span>]) &amp;
+    (df_customers[<span class="s">'Age_numeric'</span>].<span class="f">notna</span>()) &amp;
+    (df_customers[<span class="s">'CalculatedAge'</span>].<span class="f">notna</span>())]</pre>
+      </div>
+    </div>
+
+    <div class="grid g-2-1" style="margin-bottom:1.8rem; align-items:start">
+      <div class="reveal" data-anim="up">
+        <h4 style="margin-bottom:.5rem">Pola Validasi yang Sering Dipakai</h4>
+        <div class="table-wrap">
+          <table class="dt">
+            <thead><tr><th>Data</th><th>Pola / Aturan</th><th>Contoh Gagal</th></tr></thead>
+            <tbody>
+              <tr><td>Email</td><td><span class="mono">^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</span></td><td><span class="mono">fajar@</span></td></tr>
+              <tr><td>No. HP Indonesia</td><td><span class="mono">^08\d{8,11}$</span></td><td><span class="mono">08123</span></td></tr>
+              <tr><td>Rentang tanggal</td><td><span class="mono">df[df['date'] &gt; datetime.now()]</span></td><td>tanggal lahir 2030</td></tr>
+              <tr><td>Rentang numerik</td><td><span class="mono">0 &lt;= age &lt;= 120</span></td><td>usia −5 / 150</td></tr>
+              <tr><td>Himpunan nilai</td><td><span class="mono">isin(['Gold','Silver',...])</span></td><td><span class="mono">VIP</span>, <span class="mono">Diamond</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Validasi Model: Split &amp; Cross-Validation</h4>
+        <p class="small">
+          Validasi bukan hanya soal isi sel. Model juga harus divalidasi pada data yang belum pernah
+          dilihatnya — jika tidak, kita hanya mengukur kemampuan menghafal.
+        </p>
+        <div class="viz" style="padding:.9rem; margin-top:.7rem; background:rgba(6,10,20,.5)">
+          <div class="viz-title" style="font-size:.8rem; margin-bottom:.6rem">5-Fold Cross-Validation</div>
+          <div id="kfold" style="display:grid; gap:4px"></div>
+          <div class="legend" style="margin-top:.6rem">
+            <span><i style="background:#4fd8e8"></i>train</span>
+            <span><i style="background:#ffb454"></i>validasi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip reveal" data-anim="up">
+      <strong>Kesimpulan unit ini.</strong> Validasi data adalah langkah kritis: dengan metode dan teknik
+      yang tepat kita memastikan data akurat, konsisten, dan sesuai tujuan. Praktik seperti
+      <em>splitting</em> dan <em>cross-validation</em> membuat evaluasi model lebih jujur dan hasil analisis
+      lebih dapat diandalkan.
+    </div>
+
+  </div>
+</section>

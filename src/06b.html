@@ -1,0 +1,447 @@
+    <!-- encoding -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.6rem">Encoding Data Kategorikal</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Algoritma bekerja dengan angka, bukan teks. Encoding adalah jembatan — tetapi pilihan metodenya
+      membawa konsekuensi makna.
+    </p>
+
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Label Encoding</h4>
+        <p class="small">
+          Setiap kategori diubah menjadi bilangan bulat unik. Cocok untuk data <strong>ordinal</strong>
+          — kategori yang punya urutan bermakna.
+        </p>
+        <p class="small"><strong>Contoh:</strong> <span class="mono">['low','medium','high']</span> → <span class="mono">[0,1,2]</span>.</p>
+        <div class="callout warn" style="margin-top:.7rem">
+          Jangan pakai untuk data <strong>nominal</strong>. Memberi angka pada warna
+          ("Merah"=0, "Biru"=1) menciptakan urutan palsu yang bisa dibaca model sebagai
+          "Biru lebih besar dari Merah".
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>One-Hot Encoding</h4>
+        <p class="small">
+          Setiap kategori menjadi kolom biner (0/1). Cocok untuk data <strong>nominal</strong> —
+          tidak ada urutan antar kategori.
+        </p>
+        <p class="small"><strong>Contoh:</strong> <span class="mono">['red','blue','green']</span> → tiga kolom: <span class="mono">red</span>, <span class="mono">blue</span>, <span class="mono">green</span>.</p>
+        <div class="callout" style="margin-top:.7rem">
+          Konsekuensinya dimensi bertambah. Untuk kategori dengan ratusan nilai (mis. kota),
+          one-hot bisa meledak — pertimbangkan <em>target encoding</em> atau <em>hashing</em>.
+        </div>
+      </div>
+    </div>
+
+    <div class="viz reveal" data-anim="up" style="margin-bottom:1.4rem">
+      <div class="viz-head">
+        <div class="viz-title">Perbandingan pada Data Keanggotaan</div>
+        <div class="viz-note">urutan Reguler &lt; Silver &lt; Gold bermakna</div>
+      </div>
+      <div class="table-wrap">
+        <table class="dt" id="enc-table">
+          <thead>
+            <tr><th>Pelanggan</th><th>Kategori</th><th>Label</th><th>One-hot: Reguler</th><th>One-hot: Silver</th><th>One-hot: Gold</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>P1</td><td>Reguler</td><td class="enc-cell">0</td><td class="enc-cell">1</td><td class="enc-cell">0</td><td class="enc-cell">0</td></tr>
+            <tr><td>P2</td><td>Silver</td><td class="enc-cell">1</td><td class="enc-cell">0</td><td class="enc-cell">1</td><td class="enc-cell">0</td></tr>
+            <tr><td>P3</td><td>Gold</td><td class="enc-cell">2</td><td class="enc-cell">0</td><td class="enc-cell">0</td><td class="enc-cell">1</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="viz-caption">
+        Keduanya menyimpan informasi yang sama, tetapi dengan bentuk berbeda: label encoding
+        memampatkan urutan menjadi satu kolom, one-hot menyebarkannya menjadi beberapa kolom biner.
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2.2rem">
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>label_encoding.py</div>
+        <pre class="code"><span class="k">from</span> sklearn.preprocessing <span class="k">import</span> LabelEncoder
+
+le = <span class="f">LabelEncoder</span>()
+categories = [<span class="s">'low'</span>, <span class="s">'medium'</span>, <span class="s">'high'</span>]
+
+encoded = le.<span class="f">fit_transform</span>(categories)
+<span class="f">print</span>(<span class="s">"Original :"</span>, categories)
+<span class="f">print</span>(<span class="s">"Encoded  :"</span>, encoded)
+<span class="c"># [0 1 2] — urutan terjaga</span></pre>
+      </div>
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>one_hot_encoding.py</div>
+        <pre class="code"><span class="k">from</span> sklearn.preprocessing <span class="k">import</span> OneHotEncoder
+
+enc = <span class="f">OneHotEncoder</span>(sparse_output=<span class="k">False</span>)
+encoded = enc.<span class="f">fit_transform</span>(df[[<span class="s">'City'</span>]])
+<span class="f">print</span>(enc.<span class="f">get_feature_names_out</span>())
+<span class="f">print</span>(encoded)
+
+<span class="c"># Alternatif ringkas di pandas:</span>
+<span class="c"># df = pd.get_dummies(df, columns=['City'], dtype=int)</span></pre>
+      </div>
+    </div>
+
+    <!-- feature creation -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.6rem">Rekayasa Fitur: Menciptakan Informasi Baru</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Ini bagian paling kreatif: mengambil data yang sudah ada lalu mengubah atau menambahkan sesuatu
+      agar lebih berguna bagi model.
+    </p>
+
+    <div class="grid g3" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Interaksi Fitur</h4>
+        <p class="small">Fitur baru dari kombinasi dua atau lebih fitur. Contoh:
+          <span class="mono">jarak_tempuh_maks</span> dari <span class="mono">kecepatan_maks</span> ×
+          <span class="mono">efisiensi_bahan_bakar</span>.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>Fitur Derivatif</h4>
+        <p class="small">Transformasi matematis sederhana: logaritmik, eksponensial, kuadrat.
+          Contoh: <span class="mono">log_penjualan</span> dari penjualan yang rentangnya sangat lebar.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>Agregasi per Entitas</h4>
+        <p class="small">Merangkum banyak baris menjadi satu baris per objek: total belanja,
+          frekuensi transaksi, tanggal terakhir bertransaksi.</p>
+      </div>
+    </div>
+
+    <div class="grid g-2-1" style="margin-bottom:1.4rem; align-items:start">
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Dari Transaksi ke Fitur per Pelanggan (RFM)</div>
+          <div class="viz-note">tanggal acuan: 30 September 2026</div>
+        </div>
+        <div class="table-wrap" style="margin-bottom:.7rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Customer</th><th>Harga</th><th>Qty</th><th>Tanggal</th></tr></thead>
+            <tbody>
+              <tr><td>C01</td><td>100.000</td><td>2</td><td>2026-09-28</td></tr>
+              <tr><td>C01</td><td>50.000</td><td>1</td><td>2026-09-20</td></tr>
+              <tr><td>C02</td><td>50.000</td><td>4</td><td>2026-09-15</td></tr>
+              <tr><td>C03</td><td>25.000</td><td>1</td><td>2026-08-01</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-wrap">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Customer</th><th>Total Spend</th><th>Frequency</th><th>Recency (hari)</th></tr></thead>
+            <tbody>
+              <tr><td>C01</td><td>250.000</td><td>2</td><td>2</td></tr>
+              <tr><td>C02</td><td>200.000</td><td>1</td><td>15</td></tr>
+              <tr><td>C03</td><td>25.000</td><td>1</td><td>60</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="viz-caption">
+          Tiga fitur ini (<strong>Recency, Frequency, Monetary</strong>) jauh lebih informatif
+          daripada tabel transaksi mentah, karena langsung menyatakan <em>perilaku</em> pelanggan.
+        </div>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>rfm_features.py</div>
+        <pre class="code">df = pd.<span class="f">DataFrame</span>({
+    <span class="s">"Customer"</span>: [<span class="s">"C01"</span>, <span class="s">"C01"</span>, <span class="s">"C02"</span>, <span class="s">"C03"</span>],
+    <span class="s">"Harga"</span>: [100000, 50000, 50000, 25000],
+    <span class="s">"Qty"</span>: [2, 1, 4, 1],
+    <span class="s">"Tanggal"</span>: [<span class="s">"2026-09-28"</span>, <span class="s">"2026-09-20"</span>,
+                  <span class="s">"2026-09-15"</span>, <span class="s">"2026-08-01"</span>]
+})
+df[<span class="s">"Tanggal"</span>] = pd.<span class="f">to_datetime</span>(df[<span class="s">"Tanggal"</span>])
+df[<span class="s">"Total_Transaksi"</span>] = df[<span class="s">"Harga"</span>] * df[<span class="s">"Qty"</span>]
+
+acuan = pd.<span class="f">Timestamp</span>(<span class="s">"2026-09-30"</span>)
+
+fitur = df.<span class="f">groupby</span>(<span class="s">"Customer"</span>).<span class="f">agg</span>(
+    Total_Spend=(<span class="s">"Total_Transaksi"</span>, <span class="s">"sum"</span>),
+    Frequency=(<span class="s">"Tanggal"</span>, <span class="s">"count"</span>),
+    Last_Transaction=(<span class="s">"Tanggal"</span>, <span class="s">"max"</span>)
+)
+fitur[<span class="s">"Recency"</span>] = (acuan - fitur[<span class="s">"Last_Transaction"</span>]).dt.days
+
+<span class="f">print</span>(fitur.<span class="f">drop</span>(columns=<span class="s">"Last_Transaction"</span>))</pre>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>datetime_and_dummies.py</div>
+      <pre class="code">df = pd.<span class="f">DataFrame</span>({
+    <span class="s">"harga"</span>: [100000, 50000, 25000],
+    <span class="s">"quantity"</span>: [2, 4, 1],
+    <span class="s">"kategori"</span>: [<span class="s">"Elektronik"</span>, <span class="s">"Pakaian"</span>, <span class="s">"Elektronik"</span>],
+    <span class="s">"tanggal"</span>: pd.<span class="f">to_datetime</span>([<span class="s">"2026-09-28"</span>, <span class="s">"2026-09-15"</span>, <span class="s">"2026-08-01"</span>])
+})
+
+<span class="c"># 1. Nilai transaksi</span>
+df[<span class="s">"total_spend"</span>] = df[<span class="s">"harga"</span>] * df[<span class="s">"quantity"</span>]
+
+<span class="c"># 2. Ekstraksi nama hari</span>
+df[<span class="s">"hari"</span>] = df[<span class="s">"tanggal"</span>].dt.<span class="f">day_name</span>()
+
+<span class="c"># 3. Indikator akhir pekan (Sabtu/Minggu = 1)</span>
+df[<span class="s">"weekend_flag"</span>] = (df[<span class="s">"tanggal"</span>].dt.dayofweek &gt;= 5).<span class="f">astype</span>(<span class="f">int</span>)
+
+<span class="c"># 4. Kategori produk → kolom biner</span>
+df = pd.<span class="f">get_dummies</span>(df, columns=[<span class="s">"kategori"</span>], dtype=<span class="f">int</span>)
+<span class="f">print</span>(df)</pre>
+    </div>
+
+    <!-- binning -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.6rem">Binning &amp; Discretization</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Binning mengelompokkan nilai numerik menjadi beberapa kategori (bin). Manfaatnya: lebih stabil
+      terhadap noise/outlier, lebih mudah diinterpretasi, cocok untuk algoritma yang menyukai data
+      kategorikal (Naïve Bayes, decision tree), dan memudahkan visualisasi.
+    </p>
+
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card card-accent v reveal" data-anim="up">
+        <h4>Equal Width (Fixed-width)</h4>
+        <p class="small">Rentang nilai dibagi menjadi interval dengan lebar sama.</p>
+        <div class="table-wrap" style="margin-top:.6rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Interval</th><th>Kategori</th></tr></thead>
+            <tbody>
+              <tr><td>40 – 56.67</td><td>Rendah</td></tr>
+              <tr><td>56.67 – 73.33</td><td>Sedang</td></tr>
+              <tr><td>73.33 – 90</td><td>Tinggi</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:.6rem">
+          Kelemahan: jika data menumpuk di satu rentang, sebagian bin bisa hampir kosong.
+        </p>
+      </div>
+
+      <div class="card card-accent reveal" data-anim="up">
+        <h4>Equal Frequency (Quantile)</h4>
+        <p class="small">Data dibagi sehingga jumlah observasi tiap kelompok kurang lebih sama.</p>
+        <p class="small">
+          Dengan 10 mahasiswa dan 3 kelompok, tiap kelompok berisi sekitar 3–4 mahasiswa —
+          terlepas dari lebar intervalnya.
+        </p>
+        <div class="callout tip" style="margin-top:.7rem">
+          Lebih tahan terhadap distribusi yang miring, tetapi batas bin menjadi tidak "bulat"
+          dan lebih sulit dijelaskan ke pemangku kepentingan.
+        </div>
+      </div>
+    </div>
+
+    <div class="viz reveal" data-anim="up" style="margin-bottom:1.4rem">
+      <div class="viz-head">
+        <div class="viz-title">Binning pada Data Nilai Ujian</div>
+        <div class="viz-note">10 mahasiswa, 3 kategori</div>
+      </div>
+      <div class="bin-strip" id="bin-eqwidth"></div>
+      <div class="hist-axis" style="margin-bottom:1rem">
+        <span>40</span><span>45</span><span>50</span><span>60</span><span>65</span><span>70</span><span>75</span><span>80</span><span>85</span><span>90</span>
+      </div>
+      <div class="legend">
+        <span><i style="background:#4fd8e8"></i>Rendah</span>
+        <span><i style="background:#9b7bf6"></i>Sedang</span>
+        <span><i style="background:#ffb454"></i>Tinggi</span>
+      </div>
+      <div class="viz-caption">
+        Equal width: 4 nilai masuk "Rendah", 3 "Sedang", 3 "Tinggi". Equal frequency (qcut) membagi
+        berdasarkan peringkat: 40–60 jadi Rendah, 65–75 Sedang, 80–90 Tinggi. Perhatikan bahwa
+        <strong>hasilnya bisa berbeda</strong> meski datanya sama — pilihan metode adalah keputusan analitis.
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2.2rem">
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>equal_width.py</div>
+        <pre class="code">nilai = [40, 45, 50, 60, 65, 70, 75, 80, 85, 90]
+df = pd.<span class="f">DataFrame</span>({<span class="s">"Nilai"</span>: nilai})
+
+<span class="c"># Equal width: bagi rentang jadi 3 bin</span>
+df[<span class="s">"Kategori"</span>] = pd.<span class="f">cut</span>(
+    df[<span class="s">"Nilai"</span>],
+    bins=3,
+    labels=[<span class="s">"Rendah"</span>, <span class="s">"Sedang"</span>, <span class="s">"Tinggi"</span>]
+)
+<span class="f">print</span>(df)</pre>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>equal_frequency.py</div>
+        <pre class="code">nilai = [40, 45, 50, 60, 65, 70, 75, 80, 85, 90]
+df = pd.<span class="f">DataFrame</span>({<span class="s">"Nilai"</span>: nilai})
+
+<span class="c"># Equal frequency: 3 kelompok berisi sama banyak</span>
+df[<span class="s">"Kategori"</span>] = pd.<span class="f">qcut</span>(
+    df[<span class="s">"Nilai"</span>],
+    q=3,
+    labels=[<span class="s">"Rendah"</span>, <span class="s">"Sedang"</span>, <span class="s">"Tinggi"</span>]
+)
+
+<span class="f">print</span>(df.<span class="f">to_string</span>(index=<span class="k">False</span>))
+<span class="f">print</span>(df[<span class="s">"Kategori"</span>].<span class="f">value_counts</span>().<span class="f">sort_index</span>())</pre>
+      </div>
+    </div>
+
+    <div class="grid g-1-2" style="margin-bottom:2.2rem; align-items:start">
+      <div class="card reveal" data-anim="up">
+        <h4>Unsupervised vs Supervised Discretization</h4>
+        <p class="small">
+          <strong>Unsupervised</strong> tidak melihat kolom target sama sekali; ia hanya melihat
+          distribusi nilai di kolom itu sendiri. Contoh: equal-width dan equal-frequency.
+        </p>
+        <p class="small">
+          <strong>Supervised</strong> melihat fitur target, sehingga batas bin dipilih agar paling
+          membantu model membedakan kelas. Contoh: <em>entropy-based discretization</em>
+          (information gain pada decision tree).
+        </p>
+        <div class="callout" style="margin-top:.7rem">
+          Contoh intuitif: usia 17–80 tidak diperlakukan sebagai 63 nilai unik, melainkan
+          dikelompokkan menjadi <strong>Remaja, Dewasa, Lansia</strong>.
+        </div>
+      </div>
+
+      <figure class="fig reveal" data-anim="up">
+        <img src="assets/img/discretization.png" alt="Diagram diskretisasi satu dimensi dengan batas kelas">
+        <figcaption><b>Gambar asli materi.</b> Variabel kontinu <em>y</em> dipartisi menjadi empat kelas
+          berjarak sama antara <span class="mono">y_min</span> dan <span class="mono">y_max</span>;
+          titik-titik data (x₁, xᵢ, x₄) jatuh ke kelas berdasarkan intervalnya.</figcaption>
+      </figure>
+    </div>
+
+    <figure class="fig reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <img src="assets/img/binning-grid.png" alt="Perbandingan strategi binning: equal width, quantile, kmeans, dan segmentasi kustom">
+      <figcaption><b>Gambar asli materi.</b> Sembilan panel membandingkan distribusi asli (Age, Income) dengan
+        <em>equal-width</em>, <em>equal-frequency/quartile</em>, segmentasi kustom, serta tiga strategi binning
+        pada <span class="mono">NumOrders</span>: uniform, quantile, dan KMeans. Perhatikan bahwa uniform
+        menghasilkan hitungan sangat tidak rata, sedangkan quantile berusaha menyamakan jumlah.</figcaption>
+    </figure>
+
+    <!-- feature selection -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.6rem">Pemilihan Fitur &amp; Reduksi Dimensionalitas</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Tidak semua fitur membantu. Beberapa redundan, beberapa hanya menambah noise, dan sebagian
+      membuat model lambat serta sulit dijelaskan.
+    </p>
+
+    <div class="grid g3" style="margin-bottom:1.4rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">FILTER</div>
+        <h4>Berdasarkan Statistik</h4>
+        <p class="small">
+          Menilai fitur secara mandiri tanpa model: korelasi dengan target, <em>chi-square</em>,
+          <em>mutual information</em>, varians mendekati nol.
+        </p>
+        <p class="tiny muted">Cepat, tetapi mengabaikan interaksi antar fitur.</p>
+      </div>
+      <div class="card card-accent v reveal" data-anim="up">
+        <div class="card-num">WRAPPER</div>
+        <h4>Berdasarkan Kinerja Model</h4>
+        <p class="small">
+          Mencoba kombinasi fitur dan menilai lewat model: <em>forward selection</em>,
+          <em>backward elimination</em>, <em>recursive feature elimination</em> (RFE).
+        </p>
+        <p class="tiny muted">Akurat, tetapi komputasi mahal.</p>
+      </div>
+      <div class="card card-accent a reveal" data-anim="up">
+        <div class="card-num">EMBEDDED</div>
+        <h4>Terintegrasi dalam Latihan</h4>
+        <p class="small">
+          Seleksi terjadi saat model dilatih: regularisasi <strong>Lasso (L1)</strong> yang memaksa
+          koefisien nol, atau <em>feature importance</em> pada pohon keputusan.
+        </p>
+        <p class="tiny muted">Kompromi yang paling sering dipakai praktisi.</p>
+      </div>
+    </div>
+
+    <div class="grid g-2-1" style="margin-bottom:2.2rem; align-items:start">
+      <div class="card reveal" data-anim="up">
+        <h4>PCA: Meringkas Tanpa Membuang Terlalu Banyak</h4>
+        <p class="small">
+          <strong>Principal Component Analysis</strong> mengubah fitur asli menjadi komponen baru yang
+          saling tidak berkorelasi, diurutkan berdasarkan variansi yang dijelaskan. Dengan mengambil
+          beberapa komponen pertama, dimensi turun drastis sementara sebagian besar informasi tetap terjaga.
+        </p>
+        <ul class="clean small">
+          <li>Wajib <strong>standardisasi</strong> dulu, karena PCA sensitif terhadap skala.</li>
+          <li>Komponen tidak lagi punya makna asli — ini trade-off interpretabilitas.</li>
+          <li>Berguna untuk visualisasi data berdimensi tinggi (proyeksi ke 2D).</li>
+        </ul>
+      </div>
+
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Variansi Terjelaskan</div>
+          <div class="viz-note">ilustrasi scree plot</div>
+        </div>
+        <svg viewBox="0 0 420 220" role="img" aria-label="Scree plot variansi terjelaskan">
+          <g stroke="#1c2540" stroke-width="1">
+            <line x1="46" y1="180" x2="400" y2="180"/>
+            <line x1="46" y1="30" x2="46" y2="180"/>
+          </g>
+          <g id="scree-bars">
+            <rect x="66" y="52" width="34" height="128" rx="4" fill="rgba(79,216,232,.85)"/>
+            <rect x="130" y="92" width="34" height="88" rx="4" fill="rgba(79,216,232,.62)"/>
+            <rect x="194" y="126" width="34" height="54" rx="4" fill="rgba(79,216,232,.44)"/>
+            <rect x="258" y="152" width="34" height="28" rx="4" fill="rgba(79,216,232,.3)"/>
+            <rect x="322" y="166" width="34" height="14" rx="4" fill="rgba(79,216,232,.2)"/>
+          </g>
+          <g font-family="JetBrains Mono, monospace" font-size="8.5" fill="#5d6a8a">
+            <text x="83" y="196" text-anchor="middle">PC1</text>
+            <text x="147" y="196" text-anchor="middle">PC2</text>
+            <text x="211" y="196" text-anchor="middle">PC3</text>
+            <text x="275" y="196" text-anchor="middle">PC4</text>
+            <text x="339" y="196" text-anchor="middle">PC5</text>
+            <text x="38" y="184" text-anchor="end">0</text>
+            <text x="38" y="56" text-anchor="end">40%</text>
+          </g>
+          <text x="220" y="214" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#8492b4">komponen utama</text>
+        </svg>
+        <div class="viz-caption">
+          PC1 menangkap porsi variansi terbesar, PC2 berikutnya, dan seterusnya. Titik "siku"
+          (elbow) biasanya menandai berapa komponen yang layak dipertahankan.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout key reveal" data-anim="up" style="margin-bottom:2rem">
+      <strong>Kesimpulan unit ini.</strong> Dengan transformasi data, rekayasa fitur, dan agregasi,
+      dataset menjadi lebih siap menghasilkan wawasan yang baik dan model yang lebih akurat.
+      Inti keterampilannya bukan menghafal teknik, melainkan <em>melihat</em> informasi apa yang
+      tersembunyi di data mentah dan mengubahnya menjadi bentuk yang bisa dipakai model.
+    </div>
+
+    <div class="card reveal" data-anim="up">
+      <div class="card-num">TUGAS STUDI KASUS</div>
+      <h4>E-Commerce: Prediksi Pelanggan Akan Membeli Lagi</h4>
+      <p class="small">
+        Anda seorang data scientist di perusahaan e-commerce. Dataset mentah transaksi berisi:
+        <span class="mono">Transaction_ID</span>, <span class="mono">Customer_ID</span>,
+        <span class="mono">Transaction_Date</span>, <span class="mono">Product_Category</span>,
+        <span class="mono">Item_Price</span>, <span class="mono">Quantity</span>,
+        <span class="mono">Customer_Address</span>.
+        Tujuannya membangun model <em>churn/retention prediction</em>.
+      </p>
+      <div class="grid g3" style="margin-top:.8rem">
+        <div>
+          <h4 style="font-size:.9rem">1 · Feature Creation</h4>
+          <p class="tiny">Buat fitur prediktif seperti <span class="mono">Total_Spend = Item_Price × Quantity</span>,
+            jumlah transaksi, rata-rata nilai transaksi, dan jumlah kategori produk berbeda.</p>
+        </div>
+        <div>
+          <h4 style="font-size:.9rem">2 · Datetime Engineering</h4>
+          <p class="tiny">Ekstrak hari, bulan, kuartal, dan <em>weekend flag</em>; hitung recency dari
+            transaksi terakhir. Pola waktu sering menjadi sinyal kuat kebiasaan belanja.</p>
+        </div>
+        <div>
+          <h4 style="font-size:.9rem">3 · Text/Categorical</h4>
+          <p class="tiny">Alamat terlalu unik untuk dipakai langsung. Ekstrak <strong>kota</strong> dan
+            <strong>kode pos</strong>, atau turunkan jarak ke pusat distribusi sebagai fitur numerik.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>

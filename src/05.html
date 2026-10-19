@@ -1,0 +1,284 @@
+<!-- ============================================================
+     UNIT 5 — MEMAHAMI OBJEK DATA & MEMBERSIHKAN DATA
+     ============================================================ -->
+<section class="unit" id="u5" data-unit="5">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">05</span>
+        <span class="unit-tag">Judul Unit<br>Objek Data &amp; Pembersihan</span>
+      </div>
+      <h2>Memahami Objek Data<br>dan <span class="grad-text">Membersihkan Data</span></h2>
+      <p class="lead">
+        Sebelum menyentuh algoritma, kita harus tahu <strong>apa</strong> yang sedang kita analisis.
+        Objek data adalah unit dasar yang menjadi fokus analisis; salah mengenalinya, seluruh
+        proses berikutnya jadi kabur. Setelah itu, data mentah hampir selalu kotor — dan
+        pembersihan adalah harga yang harus dibayar untuk hasil yang bisa dipercaya.
+      </p>
+    </header>
+
+    <!-- objek data -->
+    <div class="grid g-2-1" style="margin-bottom:2rem; align-items:start">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">DEFINISI</div>
+        <h4>Apa Itu Objek Data?</h4>
+        <p class="small">
+          <strong>Objek data</strong> adalah entitas atau item yang diamati, diukur, atau diprediksi
+          dalam dataset — unit dasar yang menjadi fokus analisis atau model prediksi.
+          Setiap objek biasanya punya beberapa <strong>fitur/atribut</strong> yang menggambarkan
+          karakteristiknya.
+        </p>
+        <p class="small">
+          <strong>Contoh:</strong> dalam dataset perumahan, objek datanya adalah <em>"rumah"</em>.
+          Setiap baris mewakili satu rumah; kolom berisi fitur seperti harga, luas bangunan,
+          jumlah kamar tidur.
+        </p>
+        <div class="callout" style="margin-top:.85rem">
+          Satu baris = satu objek. Satu kolom = satu fitur. Jika Anda bingung menentukan objek,
+          tanyakan: <em>"satu baris ini mewakili apa?"</em>
+        </div>
+      </div>
+
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Anatomi Dataset</div>
+          <div class="viz-note">baris = objek · kolom = fitur</div>
+        </div>
+        <div class="table-wrap">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>rumah_id</th><th>harga</th><th>luas</th><th>kamar</th><th>kota</th></tr></thead>
+            <tbody>
+              <tr><td>R-001</td><td>850 jt</td><td>120 m²</td><td>3</td><td>Bandung</td></tr>
+              <tr><td>R-002</td><td>1.250 jt</td><td>180 m²</td><td>4</td><td>Jakarta</td></tr>
+              <tr><td>R-003</td><td>620 jt</td><td>90 m²</td><td>2</td><td>Medan</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="viz-caption">
+          <span class="mono">harga</span>, <span class="mono">luas</span>, <span class="mono">kamar</span> =
+          numerik · <span class="mono">kota</span> = kategorikal · <span class="mono">rumah_id</span> = pengenal.
+        </div>
+      </div>
+    </div>
+
+    <!-- langkah identifikasi -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:1rem">Empat Langkah Mengidentifikasi Objek Data</h3>
+    <div class="grid g4" style="margin-bottom:1.6rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">01</div><h4>Entitas yang Diperhatikan</h4>
+        <p class="small">Tentukan unit analisisnya: rumah, pelanggan, transaksi, pasien, atau dokumen?</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">02</div><h4>Fitur / Atribut</h4>
+        <p class="small">Daftar karakteristik yang relevan dan benar-benar tersedia di data.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">03</div><h4>Klasifikasi Tipe Data</h4>
+        <p class="small">Numerik, kategorikal, teks, atau waktu — tipe menentukan cara analisis.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">04</div><h4>Analisis &amp; Visualisasi</h4>
+        <p class="small">Statistik deskriptif + grafik untuk melihat pola, tren, dan hubungan antar fitur.</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Empat Tipe Data</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Tipe</th><th>Contoh</th><th>Perlakuan</th></tr></thead>
+            <tbody>
+              <tr><td>Numerik</td><td>price, sqft_living</td><td>Scaling, binning, statistik</td></tr>
+              <tr><td>Kategorikal</td><td>city, neighborhood</td><td>Encoding (label / one-hot)</td></tr>
+              <tr><td>Teks</td><td>deskripsi properti</td><td>Tokenisasi, TF-IDF, embedding</td></tr>
+              <tr><td>Waktu</td><td>tanggal transaksi</td><td>Ekstraksi komponen, lag, recency</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Mengapa Menentukan Objek Data Itu Penting?</h4>
+        <ul class="clean vi small">
+          <li><strong>Memfokuskan analisis</strong> — menghindari analisis terlalu luas yang membuang waktu.</li>
+          <li><strong>Pemilihan fitur yang tepat</strong> — hanya variabel relevan yang masuk model.</li>
+          <li><strong>Kualitas data</strong> — tahu kolom mana yang wajib bersih dan mana yang boleh longgar.</li>
+          <li><strong>Efisiensi &amp; efektivitas</strong> — sumber daya diarahkan ke hal yang berdampak.</li>
+          <li><strong>Keandalan hasil</strong> — kesimpulan bisa dipertanggungjawabkan.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>customer_churn_dataset.py</div>
+      <pre class="code"><span class="c"># Dataset customer churn untuk klasifikasi</span>
+np.random.<span class="f">seed</span>(42)
+n = 1000
+
+data = {
+    <span class="s">'CustomerID'</span>: <span class="f">range</span>(1, n + 1),
+    <span class="s">'Age'</span>: np.random.<span class="f">randint</span>(18, 70, n),
+    <span class="s">'Gender'</span>: np.random.<span class="f">choice</span>([<span class="s">'Male'</span>, <span class="s">'Female'</span>], n),
+    <span class="s">'Tenure_Months'</span>: np.random.<span class="f">randint</span>(1, 72, n),
+    <span class="s">'MonthlyCharges'</span>: np.random.<span class="f">uniform</span>(20, 120, n).<span class="f">round</span>(2),
+    <span class="s">'TotalCharges'</span>: np.random.<span class="f">uniform</span>(100, 8000, n).<span class="f">round</span>(2),
+    <span class="s">'Contract'</span>: np.random.<span class="f">choice</span>(
+        [<span class="s">'Month-to-month'</span>, <span class="s">'One year'</span>, <span class="s">'Two year'</span>],
+        n, p=[0.5, 0.3, 0.2]),
+    <span class="s">'PaymentMethod'</span>: np.random.<span class="f">choice</span>(
+        [<span class="s">'Electronic check'</span>, <span class="s">'Mailed check'</span>,
+         <span class="s">'Bank transfer'</span>, <span class="s">'Credit card'</span>], n),
+    <span class="s">'InternetService'</span>: np.random.<span class="f">choice</span>(
+        [<span class="s">'DSL'</span>, <span class="s">'Fiber optic'</span>, <span class="s">'No'</span>], n, p=[0.4, 0.4, 0.2]),
+    <span class="s">'NumProducts'</span>: np.random.<span class="f">randint</span>(1, 6, n),
+    <span class="s">'NumCalls'</span>: np.random.<span class="f">randint</span>(0, 10, n),
+    <span class="s">'ComplaintResolved'</span>: np.random.<span class="f">choice</span>([0, 1], n, p=[0.3, 0.7]),
+}
+df = pd.<span class="f">DataFrame</span>(data)
+
+<span class="c"># Target: churn lebih tinggi untuk kontrak bulanan,</span>
+<span class="c"># tagihan besar, masa berlangganan pendek, komplain tak selesai</span>
+churn_prob = (
+    (df[<span class="s">'Contract'</span>] == <span class="s">'Month-to-month'</span>).<span class="f">astype</span>(<span class="f">int</span>) * 0.30 +
+    (df[<span class="s">'MonthlyCharges'</span>] &gt; 80).<span class="f">astype</span>(<span class="f">int</span>) * 0.20 +
+    (df[<span class="s">'Tenure_Months'</span>] &lt; 12).<span class="f">astype</span>(<span class="f">int</span>) * 0.25 +
+    (df[<span class="s">'ComplaintResolved'</span>] == 0).<span class="f">astype</span>(<span class="f">int</span>) * 0.15 +
+    np.random.<span class="f">uniform</span>(0, 0.1, n)
+)
+df[<span class="s">'Churn'</span>] = (churn_prob &gt; 0.5).<span class="f">astype</span>(<span class="f">int</span>)</pre>
+    </div>
+
+    <div class="callout key reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <strong>Kesimpulan bagian objek data.</strong> Tanpa pemahaman jelas tentang objek data,
+      analisis menjadi kabur, kurang terfokus, dan bisa menghasilkan wawasan yang salah.
+      Karena itu setiap proyek sebaiknya dimulai dengan mengidentifikasi objek data secara eksplisit.
+    </div>
+
+    <!-- pembersihan -->
+    <div class="rule"></div>
+
+    <h2 class="reveal" data-anim="up" style="font-size:clamp(1.7rem,2.9vw,2.3rem); margin-bottom:.7rem">Membersihkan Data</h2>
+    <p class="lead reveal" data-anim="up" style="max-width:78ch; margin-bottom:1.8rem">
+      Pembersihan data adalah proses sistematis untuk mengidentifikasi dan memperbaiki data yang
+      tidak valid atau tidak akurat: mengisi nilai hilang, menghapus duplikasi, memperbaiki
+      inkonsistensi, dan menangani outlier.
+    </p>
+
+    <div class="viz reveal" data-anim="up" style="margin-bottom:1.8rem">
+      <div class="viz-head">
+        <div class="viz-title">Empat Masalah Klasik — dan Penanganannya</div>
+        <div class="viz-note">animasi: sel bermasalah disorot lalu diperbaiki</div>
+      </div>
+
+      <div class="grid g4" style="gap:.8rem">
+        <div class="card" style="padding:1rem">
+          <div class="card-num">MASALAH 1</div>
+          <h4 style="font-size:.95rem">Missing Values</h4>
+          <p class="tiny muted">Isi dengan mean/median/mode, hapus baris/kolom, atau imputasi lanjutan (KNN, regresi).</p>
+          <div class="mini-grid" id="mini-missing" style="margin-top:.6rem"></div>
+        </div>
+        <div class="card" style="padding:1rem">
+          <div class="card-num">MASALAH 2</div>
+          <h4 style="font-size:.95rem">Duplikasi</h4>
+          <p class="tiny muted"><span class="mono">duplicated()</span> untuk mendeteksi, <span class="mono">drop_duplicates()</span> untuk menghapus.</p>
+          <div class="mini-grid" id="mini-dup" style="margin-top:.6rem"></div>
+        </div>
+        <div class="card" style="padding:1rem">
+          <div class="card-num">MASALAH 3</div>
+          <h4 style="font-size:.95rem">Inkonsistensi</h4>
+          <p class="tiny muted">Samakan format tanggal, satuan, dan penulisan kategori ("NYC" vs "New York City").</p>
+          <div class="mini-grid" id="mini-incon" style="margin-top:.6rem"></div>
+        </div>
+        <div class="card" style="padding:1rem">
+          <div class="card-num">MASALAH 4</div>
+          <h4 style="font-size:.95rem">Outlier</h4>
+          <p class="tiny muted">Deteksi dengan IQR/z-score, lalu hapus, batasi (<em>winsorize</em>), atau biarkan bila bermakna.</p>
+          <div class="mini-grid" id="mini-out" style="margin-top:.6rem"></div>
+        </div>
+      </div>
+
+      <div class="viz-caption">
+        Keempat masalah ini bukan kasus langka — pada data dunia nyata, hampir selalu ada.
+        Urutan penanganan yang wajar: <strong>missing → duplikat → inkonsistensi → outlier</strong>,
+        karena duplikat dan inkonsistensi bisa mengacaukan statistik yang dipakai untuk mendeteksi outlier.
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:1.8rem">
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>imputation.py</div>
+        <pre class="code"><span class="c"># Mean imputation untuk numerik simetris</span>
+age_mean = df_simple[<span class="s">'Age'</span>].<span class="f">mean</span>()
+df_simple[<span class="s">'Age'</span>] = df_simple[<span class="s">'Age'</span>].<span class="f">fillna</span>(age_mean)
+
+<span class="c"># Median untuk data miring (income)</span>
+income_median = df_simple[<span class="s">'Income'</span>].<span class="f">median</span>()
+df_simple[<span class="s">'Income'</span>] = df_simple[<span class="s">'Income'</span>].<span class="f">fillna</span>(income_median)
+
+<span class="c"># Mode untuk kategorikal</span>
+<span class="k">for</span> col <span class="k">in</span> [<span class="s">'ProductCategory'</span>, <span class="s">'MembershipLevel'</span>, <span class="s">'City'</span>]:
+    <span class="k">if</span> df_simple[col].<span class="f">isnull</span>().<span class="f">any</span>():
+        mode_val = df_simple[col].<span class="f">mode</span>()[0]
+        df_simple[col] = df_simple[col].<span class="f">fillna</span>(mode_val)
+        <span class="f">print</span>(<span class="s">f"{col} diisi dengan: {mode_val}"</span>)</pre>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>duplicates_consistency.py</div>
+        <pre class="code"><span class="c"># 1. Deteksi &amp; hapus duplikat</span>
+<span class="f">print</span>(<span class="s">"Duplikat:"</span>, df.<span class="f">duplicated</span>().<span class="f">sum</span>())
+df = df.<span class="f">drop_duplicates</span>()
+
+<span class="c"># 2. Samakan format tanggal</span>
+df[<span class="s">'tanggal'</span>] = pd.<span class="f">to_datetime</span>(
+    df[<span class="s">'tanggal'</span>], errors=<span class="s">'coerce'</span>)
+
+<span class="c"># 3. Normalisasi kategori</span>
+df[<span class="s">'kota'</span>] = (df[<span class="s">'kota'</span>]
+    .<span class="f">str</span>.<span class="f">strip</span>()
+    .<span class="f">str</span>.<span class="f">title</span>()
+    .<span class="f">replace</span>({<span class="s">'Nyc'</span>: <span class="s">'New York City'</span>}))
+
+<span class="c"># 4. Periksa tipe data akhir</span>
+<span class="f">print</span>(df.<span class="f">dtypes</span>)
+<span class="f">print</span>(df.<span class="f">isnull</span>().<span class="f">sum</span>())</pre>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:1.8rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Mengapa Pembersihan Penting?</h4>
+        <p class="small">
+          Kualitas data yang buruk menghasilkan kesimpulan yang tidak akurat atau menyesatkan.
+          Model yang dilatih pada data kotor akan "belajar" kesalahan tersebut, lalu
+          mereproduksinya pada data baru — dengan keyakinan yang menipu.
+        </p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>Kapan Berhenti Membersihkan?</h4>
+        <p class="small">
+          Pembersihan bukan tujuan, melainkan sarana. Berhenti ketika data sudah cukup baik
+          untuk menjawab pertanyaan — bukan ketika data "sempurna". Terlalu agresif membuang data
+          bisa menghilangkan sinyal yang justru penting.
+        </p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>Dokumentasikan</h4>
+        <p class="small">
+          Catat setiap keputusan: berapa baris dihapus, metode imputasi apa yang dipakai, dan
+          mengapa. Tanpa catatan, analisis tidak bisa direproduksi — dan sulit dipertahankan
+          ketika ditanya "angka ini dari mana?".
+        </p>
+      </div>
+    </div>
+
+    <div class="callout tip reveal" data-anim="up">
+      <strong>Kesimpulan unit ini.</strong> Data yang bersih dan terstruktur memungkinkan analisis lebih akurat,
+      prediksi lebih baik, dan hasil lebih dapat diandalkan. Mengikuti langkah pembersihan secara konsisten
+      adalah cara paling murah untuk meningkatkan kualitas proyek data science.
+    </div>
+
+  </div>
+</section>

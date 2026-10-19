@@ -1,0 +1,247 @@
+    <div class="rule"></div>
+    <h2 class="reveal" data-anim="up" style="font-size:clamp(1.7rem,2.9vw,2.3rem); margin-bottom:.7rem">Evaluasi Model Klasifikasi</h2>
+    <p class="lead reveal" data-anim="up" style="max-width:78ch; margin-bottom:1.8rem">
+      Klasifikasi memprediksi kategori, sehingga metriknya menghitung <em>jenis</em> kesalahan —
+      bukan sekadar berapa banyak yang benar. Di sinilah akurasi sering menipu.
+    </p>
+
+    <div class="grid g4" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Accuracy</h4>
+        <p class="small">Proporsi prediksi benar dari total prediksi.</p>
+        <div class="formula" style="padding:.6rem .4rem; font-size:.76rem">
+          <span class="frac"><span class="num">TP + TN</span><span class="den">TP+TN+FP+FN</span></span>
+        </div>
+        <p class="tiny muted" style="margin-top:.5rem">Menipu pada data tidak seimbang.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>Precision</h4>
+        <p class="small">Dari semua yang diprediksi positif, berapa yang benar-benar positif?</p>
+        <div class="formula" style="padding:.6rem .4rem; font-size:.76rem">
+          <span class="frac"><span class="num">TP</span><span class="den">TP + FP</span></span>
+        </div>
+        <p class="tiny muted" style="margin-top:.5rem">Penting saat biaya false positive tinggi.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>Recall</h4>
+        <p class="small">Dari semua kasus positif yang sebenarnya, berapa yang tertangkap?</p>
+        <div class="formula" style="padding:.6rem .4rem; font-size:.76rem">
+          <span class="frac"><span class="num">TP</span><span class="den">TP + FN</span></span>
+        </div>
+        <p class="tiny muted" style="margin-top:.5rem">Penting saat melewatkan kasus positif berbahaya.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>F1-Score</h4>
+        <p class="small">Rata-rata harmonik precision &amp; recall — menyeimbangkan keduanya.</p>
+        <div class="formula" style="padding:.6rem .4rem; font-size:.74rem">
+          <span>2 ·</span>
+          <span class="frac"><span class="num">P · R</span><span class="den">P + R</span></span>
+        </div>
+        <p class="tiny muted" style="margin-top:.5rem">Dipakai ketika data tidak seimbang.</p>
+      </div>
+    </div>
+
+    <!-- confusion matrix -->
+    <div class="grid g-1-2" style="margin-bottom:1.6rem; align-items:start">
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Confusion Matrix</div>
+          <div class="viz-note">total 200 observasi</div>
+        </div>
+
+        <div class="cm">
+          <div class="cm-head"></div>
+          <div class="cm-head">Prediksi Positif</div>
+          <div class="cm-head">Prediksi Negatif</div>
+
+          <div class="cm-head" style="place-items:center end; text-align:right">Aktual<br>Positif</div>
+          <div class="cm-cell tp"><div class="n" data-count="30">0</div><div class="t">TP · benar positif</div></div>
+          <div class="cm-cell fn"><div class="n" data-count="70">0</div><div class="t">FN · lolos deteksi</div></div>
+
+          <div class="cm-head" style="place-items:center end; text-align:right">Aktual<br>Negatif</div>
+          <div class="cm-cell fp"><div class="n" data-count="20">0</div><div class="t">FP · alarm palsu</div></div>
+          <div class="cm-cell tn"><div class="n" data-count="80">0</div><div class="t">TN · benar negatif</div></div>
+        </div>
+
+        <div class="viz-caption">
+          Empat sel ini adalah sumber semua metrik klasifikasi. Dari sini:
+          akurasi 55%, precision 60%, recall 30%, F1 40%.
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Menghitung dari Matriks yang Sama</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Metrik</th><th>Perhitungan</th><th>Hasil</th></tr></thead>
+            <tbody>
+              <tr><td>Accuracy</td><td>(30 + 80) / 200</td><td>55%</td></tr>
+              <tr><td>Precision</td><td>30 / (30 + 20)</td><td>60%</td></tr>
+              <tr><td>Recall</td><td>30 / (30 + 70)</td><td>30%</td></tr>
+              <tr><td>Specificity</td><td>80 / (80 + 20)</td><td>80%</td></tr>
+              <tr><td>F1-Score</td><td>2·(0.6·0.3)/(0.6+0.3)</td><td>40%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn" style="margin-top:.8rem">
+          <strong>Contoh kegagalan akurasi:</strong> model ini "benar" 55% — terlihat lumayan.
+          Tetapi ia hanya menangkap <strong>30 dari 100</strong> kasus positif. Untuk skrining penyakit,
+          ini berbahaya: 70 kasus lolos.
+        </div>
+      </div>
+    </div>
+
+    <figure class="fig reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <img src="assets/img/confusion-matrix.png" alt="Confusion matrix TP 30, FN 70, FP 20, TN 80">
+      <figcaption><b>Gambar asli materi.</b> Bentuk tabel confusion matrix sebagaimana disajikan:
+        baris = aktual, kolom = prediksi. Perhatikan letak FN (aktual positif, diprediksi negatif) —
+        inilah kesalahan yang paling mahal dalam diagnosis medis.</figcaption>
+    </figure>
+
+    <!-- ROC -->
+    <div class="grid g-2-1" style="margin-bottom:2.2rem; align-items:start">
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">ROC Curve &amp; AUC</div>
+          <div class="viz-note">trade-off TPR vs FPR di berbagai threshold</div>
+        </div>
+
+        <svg viewBox="0 0 460 330" role="img" aria-label="ROC curve dengan area under curve">
+          <!-- grid -->
+          <g stroke="#1c2540" stroke-width="1">
+            <line x1="60" y1="270" x2="410" y2="270"/>
+            <line x1="60" y1="270" x2="60" y2="40"/>
+            <line x1="60" y1="212" x2="410" y2="212" stroke-dasharray="2 5"/>
+            <line x1="60" y1="154" x2="410" y2="154" stroke-dasharray="2 5"/>
+            <line x1="60" y1="96" x2="410" y2="96" stroke-dasharray="2 5"/>
+            <line x1="148" y1="270" x2="148" y2="40" stroke-dasharray="2 5"/>
+            <line x1="235" y1="270" x2="235" y2="40" stroke-dasharray="2 5"/>
+            <line x1="323" y1="270" x2="323" y2="40" stroke-dasharray="2 5"/>
+          </g>
+
+          <!-- random baseline -->
+          <line x1="60" y1="270" x2="410" y2="40" stroke="#5d6a8a" stroke-width="1.4" stroke-dasharray="6 5"/>
+          <text x="150" y="232" font-family="Inter, sans-serif" font-size="9" fill="#5d6a8a" transform="rotate(-33 150 232)">model acak (AUC 0.5)</text>
+
+          <!-- AUC area -->
+          <path id="roc-area" d="M60,270 L60,120 C110,78 150,60 220,54 C300,48 370,44 410,42 L410,270 Z"
+                fill="rgba(79,216,232,.13)"/>
+
+          <!-- ROC curve -->
+          <path id="roc-curve" d="M60,270 L60,120 C110,78 150,60 220,54 C300,48 370,44 410,42"
+                fill="none" stroke="#4fd8e8" stroke-width="2.6" stroke-linecap="round"/>
+
+          <!-- axes labels -->
+          <g font-family="Inter, sans-serif" font-size="9.5" fill="#8492b4">
+            <text x="235" y="300" text-anchor="middle">False Positive Rate (1 − specificity)</text>
+            <text transform="translate(26,160) rotate(-90)" text-anchor="middle">True Positive Rate (recall)</text>
+            <text x="54" y="274" text-anchor="end">0</text>
+            <text x="54" y="44" text-anchor="end">1.0</text>
+            <text x="410" y="288" text-anchor="middle">1.0</text>
+          </g>
+
+          <!-- threshold marker -->
+          <circle class="roc-pt" cx="220" cy="54" r="5" fill="#ffb454" stroke="#0b1020" stroke-width="2"/>
+          <text x="232" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#ffb454">threshold</text>
+        </svg>
+
+        <div class="viz-caption">
+          Setiap titik pada kurva adalah satu nilai threshold. Menurunkan threshold menaikkan recall
+          tetapi juga menaikkan false positive rate. <strong>AUC</strong> merangkum seluruh kurva menjadi
+          satu angka: 0.5 = acak, 1.0 = sempurna.
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Membaca ROC</h4>
+        <p class="small">
+          <strong>TPR (recall)</strong> = TP / (TP + FN) — proporsi positif yang tertangkap.
+          <strong>FPR</strong> = FP / (FP + TN) — proporsi negatif yang salah dituduh positif.
+        </p>
+        <div class="formula" style="margin:.7rem 0; font-size:.8rem">
+          <span>FPR =</span>
+          <span class="frac"><span class="num">FP</span><span class="den">FP + TN</span></span>
+        </div>
+        <ul class="clean small">
+          <li><strong>AUC ≈ 0.5</strong> — tidak lebih baik dari menebak acak.</li>
+          <li><strong>AUC 0.7–0.8</strong> — cukup baik.</li>
+          <li><strong>AUC 0.8–0.9</strong> — baik.</li>
+          <li><strong>AUC &gt; 0.9</strong> — sangat baik (periksa kebocoran data!).</li>
+        </ul>
+        <p class="tiny muted" style="margin-top:.6rem">
+          AUC berguna untuk membandingkan model tanpa mengunci threshold tertentu.
+        </p>
+      </div>
+    </div>
+
+    <figure class="fig reveal" data-anim="up" style="margin-bottom:2.2rem; max-width:520px">
+      <img src="assets/img/fpr-formula.png" alt="Rumus FPR = FP / (FP + TN)">
+      <figcaption><b>Gambar asli materi.</b> Definisi <em>False Positive Rate</em> — perhatikan bahwa
+        penyebutnya adalah seluruh aktual negatif, bukan total data.</figcaption>
+    </figure>
+
+    <!-- memilih metrik -->
+    <div class="grid g3" style="margin-bottom:2rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">FAKTOR 1</div>
+        <h4>Konteks Aplikasi</h4>
+        <p class="small">
+          Deteksi penyakit serius → <strong>recall</strong> lebih penting, karena melewatkan kasus
+          positif jauh lebih berbahaya daripada beberapa alarm palsu.
+        </p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">FAKTOR 2</div>
+        <h4>Ketidakseimbangan Data</h4>
+        <p class="small">
+          Jika 99% data negatif, model yang selalu menebak "negatif" mendapat akurasi 99% tetapi
+          tidak berguna. Gunakan precision, recall, atau F1.
+        </p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">FAKTOR 3</div>
+        <h4>Trade-off</h4>
+        <p class="small">
+          Menaikkan recall biasanya menurunkan precision. F1 dipakai untuk menyeimbangkan keduanya;
+          pilihan akhir tetap bergantung biaya masing-masing jenis kesalahan.
+        </p>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2rem">
+      <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>classification_metrics.py</div>
+      <pre class="code"><span class="k">from</span> sklearn.metrics <span class="k">import</span> (accuracy_score, precision_score,
+                             recall_score, f1_score, confusion_matrix,
+                             roc_auc_score, classification_report)
+
+<span class="f">print</span>(<span class="s">"Accuracy :"</span>, <span class="f">accuracy_score</span>(y_test, y_pred))
+<span class="f">print</span>(<span class="s">"Precision:"</span>, <span class="f">precision_score</span>(y_test, y_pred))
+<span class="f">print</span>(<span class="s">"Recall   :"</span>, <span class="f">recall_score</span>(y_test, y_pred))
+<span class="f">print</span>(<span class="s">"F1-Score :"</span>, <span class="f">f1_score</span>(y_test, y_pred))
+
+<span class="c"># Confusion matrix: [[TN, FP], [FN, TP]]</span>
+cm = <span class="f">confusion_matrix</span>(y_test, y_pred)
+<span class="f">print</span>(cm)
+
+<span class="c"># ROC-AUC butuh skor probabilitas, bukan label</span>
+y_prob = model.<span class="f">predict_proba</span>(X_test)[:, 1]
+<span class="f">print</span>(<span class="s">"ROC-AUC  :"</span>, <span class="f">roc_auc_score</span>(y_test, y_prob))
+
+<span class="f">print</span>(<span class="f">classification_report</span>(y_test, y_pred, digits=3))</pre>
+    </div>
+
+    <div class="callout key reveal" data-anim="up" style="margin-bottom:2rem">
+      <strong>Aturan praktis.</strong> Laporkan lebih dari satu metrik. Akurasi saja tidak cukup;
+      selalu sertakan confusion matrix agar jenis kesalahan terlihat. Dan pastikan evaluasi dilakukan
+      pada data uji yang benar-benar belum pernah dilihat model.
+    </div>
+
+    <div class="callout tip reveal" data-anim="up">
+      <strong>Kesimpulan unit ini.</strong> Metrik evaluasi berbeda untuk regresi dan klasifikasi, dan
+      pemilihannya harus mengikuti tujuan aplikasi. Dengan evaluasi yang jujur kita bisa memutuskan
+      apakah model layak dipakai, di mana ia lemah, dan apa yang perlu diperbaiki — bukan sekadar
+      memamerkan satu angka yang terlihat bagus.
+    </div>
+
+  </div>
+</section>

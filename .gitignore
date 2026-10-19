@@ -1,0 +1,10 @@
+# Materi sumber (PDF/PPTX kelas) — tidak ikut di-commit
+material/
+
+# Artefak ekstraksi: teks, halaman PNG, media mentah, hasil riset web
+extract/
+
+# Sampah OS / editor
+.DS_Store
+Thumbs.db
+*.log

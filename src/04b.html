@@ -1,0 +1,160 @@
+    <!-- visualisasi -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.6rem">Lima Visualisasi Inti</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Visualisasi membantu memahami distribusi, pola, dan hubungan melalui representasi grafis.
+      Pilih bentuk sesuai pertanyaan: <em>bagaimana sebarannya?</em> → histogram;
+      <em>bagaimana hubungan dua variabel?</em> → scatter; <em>di mana outlier?</em> → box plot.
+    </p>
+
+    <div class="grid g2" style="margin-bottom:1.3rem">
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Histogram — Distribusi Frekuensi</div>
+          <div class="viz-note">satu variabel, banyak bin</div>
+        </div>
+        <div class="hist" id="hist1"></div>
+        <div class="hist-axis"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div>
+        <div class="viz-caption">
+          Histogram mengelompokkan nilai ke dalam bin dan menampilkan frekuensinya. Bentuk yang muncul
+          langsung memberi tahu apakah data simetris, miring, atau punya dua puncak.
+        </div>
+      </div>
+
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Scatter Plot — Hubungan Dua Variabel Numerik</div>
+          <div class="viz-note">setiap titik = satu pengamatan</div>
+        </div>
+        <div class="dots-plot" id="scatter1"></div>
+        <div class="viz-caption">
+          Posisi horizontal (x) dan vertikal (y) ditentukan nilai dua variabel. Pola naik menandakan
+          korelasi positif, pola turun korelasi negatif, dan sebaran acak menandakan tidak ada hubungan linier.
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:1.6rem">
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Heatmap Korelasi</div>
+          <div class="viz-note">warna = kekuatan &amp; arah hubungan</div>
+        </div>
+        <div class="heat" id="heat1"></div>
+        <div class="legend">
+          <span><i style="background:#5b8cff"></i>positif kuat</span>
+          <span><i style="background:#26314f"></i>netral</span>
+          <span><i style="background:#ff6f91"></i>negatif</span>
+        </div>
+        <div class="viz-caption">
+          Sel diagonal selalu 1 (variabel berkorelasi sempurna dengan dirinya sendiri). Matriks simetris,
+          jadi separuh sel sebenarnya duplikat.
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Bar Plot &amp; Kapan Dipakai</h4>
+        <p class="small">
+          Bar plot menampilkan data <strong>kategorikal</strong>: setiap batang satu kategori, dan tinggi/panjang
+          batang menunjukkan ukuran atau frekuensinya. Cocok untuk membandingkan jumlah transaksi per kota,
+          jumlah pelanggan per segmen, dan sejenisnya.
+        </p>
+        <div class="table-wrap" style="margin-top:.7rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Visualisasi</th><th>Jawab Pertanyaan</th></tr></thead>
+            <tbody>
+              <tr><td>Histogram</td><td>Bagaimana distribusi satu variabel numerik?</td></tr>
+              <tr><td>Scatter plot</td><td>Bagaimana hubungan dua variabel numerik?</td></tr>
+              <tr><td>Box plot</td><td>Di mana median, sebaran, dan outlier?</td></tr>
+              <tr><td>Bar plot</td><td>Bagaimana perbandingan antar kategori?</td></tr>
+              <tr><td>Heatmap</td><td>Bagaimana pola korelasi banyak variabel sekaligus?</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <figure class="fig reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <img src="assets/img/hist-mean-median.png" alt="Dua histogram dengan garis mean dan median">
+      <figcaption><b>Gambar asli materi.</b> Histogram <em>CustomerAge</em> (mean 41.7 / median 41.5 — hampir
+        berimpit, distribusi relatif simetris) dan <em>Rating</em> (mean = median = 3.0). Ketika mean dan median
+        hampir sama, distribusi cenderung simetris; ketika berbeda jauh, ada kemiringan.</figcaption>
+    </figure>
+
+    <!-- korelasi -->
+    <div class="grid g-1-2" style="margin-bottom:2.2rem; align-items:start">
+      <div class="card card-accent v reveal" data-anim="up">
+        <div class="card-num">ANALISIS KORELASI</div>
+        <h4>Mengukur Kekuatan &amp; Arah Hubungan</h4>
+        <p class="small">
+          Korelasi mengukur hubungan <strong>linier</strong> antara dua variabel, bernilai antara −1 dan 1:
+          positif (naik bersama), negatif (berlawanan), nol (tidak ada hubungan linier).
+        </p>
+        <ol class="steps small" style="margin-top:.8rem">
+          <li>Pastikan dataset lengkap; tangani missing value pada kolom yang dianalisis.</li>
+          <li>Hitung matriks korelasi (<span class="mono">df.corr()</span>).</li>
+          <li>Visualisasikan dengan heatmap agar pola mudah dibaca.</li>
+          <li>Interpretasikan: kekuatan, arah, dan kemungkinan multikolinearitas.</li>
+        </ol>
+      </div>
+
+      <figure class="fig reveal" data-anim="up">
+        <img src="assets/img/heatmap-korelasi.png" alt="Heatmap korelasi antar variabel perumahan">
+        <figcaption><b>Gambar asli materi.</b> Heatmap 13 variabel perumahan. <span class="mono">sqft_living</span>
+          vs <span class="mono">sqft_above</span> = 0.88 (sangat kuat, nyaris redundan); <span class="mono">price</span>
+          paling berkorelasi dengan <span class="mono">sqft_living</span> (0.43). Perhatikan juga korelasi negatif
+          <span class="mono">condition</span> vs <span class="mono">yr_built</span> (−0.40).</figcaption>
+      </figure>
+    </div>
+
+    <div class="callout warn reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <strong>Korelasi bukan kausalitas.</strong> Dua variabel bisa berkorelasi tinggi karena kebetulan,
+      karena sama-sama dipengaruhi variabel ketiga, atau karena tren waktu. Korelasi hanya menunjukkan
+      <em>hubungan linier</em>, bukan mekanisme penyebab.
+    </div>
+
+    <!-- outlier -->
+    <div class="grid g-2-1" style="margin-bottom:2.2rem; align-items:start">
+      <div class="reveal" data-anim="up">
+        <h4 style="margin-bottom:.6rem">Mengidentifikasi Pola &amp; Anomali dengan Z-Score</h4>
+        <p class="small">
+          Z-score mengukur seberapa jauh sebuah titik data menyimpang dari rata-rata, dalam satuan
+          standar deviasi. Nilai |z| &gt; 3 umum dipakai sebagai penanda outlier.
+        </p>
+        <div class="formula" style="margin:.8rem 0">
+          <span>z =</span>
+          <span class="frac"><span class="num">x − μ</span><span class="den">σ</span></span>
+        </div>
+        <div class="code-head" style="margin-top:.4rem"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>zscore_outliers.py</div>
+        <pre class="code"><span class="k">from</span> scipy <span class="k">import</span> stats
+
+zscore_info = []
+<span class="k">for</span> col <span class="k">in</span> numeric_cols_sample:
+    <span class="k">if</span> col <span class="k">in</span> df.columns:
+        z = np.<span class="f">abs</span>(stats.<span class="f">zscore</span>(df[col].<span class="f">dropna</span>()))
+        n_out = <span class="f">len</span>(z[z &gt; 3])
+        zscore_info.<span class="f">append</span>({
+            <span class="s">'Kolom'</span>: col,
+            <span class="s">'Jumlah Outliers (Z&gt;3)'</span>: n_out,
+            <span class="s">'Persentase (%)'</span>: <span class="f">f</span>(<span class="s">"{n_out / len(df) * 100:.2f}"</span>)
+        })
+
+<span class="f">print</span>(pd.<span class="f">DataFrame</span>(zscore_info).<span class="f">to_string</span>(index=<span class="k">False</span>))</pre>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Dua Cara Umum Menandai Outlier</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Metode</th><th>Aturan</th><th>Cocok Untuk</th></tr></thead>
+            <tbody>
+              <tr><td>Z-score</td><td>|z| &gt; 3</td><td>Data mendekati normal</td></tr>
+              <tr><td>IQR</td><td>&lt; Q1−1.5·IQR atau &gt; Q3+1.5·IQR</td><td>Data miring / robust</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout warn" style="margin-top:.8rem">
+          <strong>Outlier ≠ error.</strong> Sebelum membuang, tanyakan dulu: apakah ini kesalahan input,
+          atau memang kejadian nyata yang justru penting (mis. transaksi penipuan)?
+        </div>
+      </div>
+    </div>

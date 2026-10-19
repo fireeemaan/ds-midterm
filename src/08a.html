@@ -1,0 +1,339 @@
+<!-- ============================================================
+     UNIT 8 (bagian 1) — EVALUASI MODEL: REGRESI
+     ============================================================ -->
+<section class="unit" id="u8" data-unit="8">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">08</span>
+        <span class="unit-tag">Judul Unit<br>Mengevaluasi Model</span>
+      </div>
+      <h2>Mengevaluasi<br><span class="grad-text">Hasil Pemodelan</span></h2>
+      <p class="lead">
+        Evaluasi menentukan seberapa baik model bekerja pada data yang <strong>belum pernah dilihat</strong>.
+        Tanpa evaluasi yang tepat, model bisa tampak hebat saat dilatih tetapi gagal total saat dipakai.
+      </p>
+    </header>
+
+    <div class="grid g3" style="margin-bottom:2.2rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">ALASAN 1</div>
+        <h4>Keandalan &amp; Validitas</h4>
+        <p class="small">
+          <strong>Keandalan</strong>: prediksi konsisten dan akurat pada berbagai set data, termasuk yang
+          tidak ada di data latih. <strong>Validitas</strong>: model benar-benar memprediksi apa yang
+          seharusnya, bukan memanfaatkan kebetulan dalam data.
+        </p>
+      </div>
+      <div class="card card-accent a reveal" data-anim="up">
+        <div class="card-num">ALASAN 2</div>
+        <h4>Mendeteksi Over/Underfitting</h4>
+        <p class="small">
+          <strong>Overfitting</strong>: model terlalu kompleks, menangkap noise — bagus di data latih,
+          buruk di data baru. <strong>Underfitting</strong>: model terlalu sederhana — buruk di keduanya.
+        </p>
+      </div>
+      <div class="card card-accent g reveal" data-anim="up">
+        <div class="card-num">ALASAN 3</div>
+        <h4>Optimasi untuk Masa Depan</h4>
+        <p class="small">
+          Metrik memberi umpan balik untuk tuning parameter atau mengganti algoritma, sekaligus
+          memastikan model layak masuk produksi.
+        </p>
+      </div>
+    </div>
+
+    <!-- over/underfitting visual -->
+    <div class="viz reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="viz-head">
+        <div class="viz-title">Underfitting · Pas · Overfitting</div>
+        <div class="viz-note">garis model vs sebaran data</div>
+      </div>
+
+      <svg viewBox="0 0 900 240" role="img" aria-label="Tiga kondisi fitting model">
+        <g font-family="Inter, sans-serif" font-size="11" font-weight="600">
+          <text x="150" y="22" text-anchor="middle" fill="#ff6f91">Underfitting</text>
+          <text x="450" y="22" text-anchor="middle" fill="#5ce1a6">Good fit</text>
+          <text x="750" y="22" text-anchor="middle" fill="#ffb454">Overfitting</text>
+        </g>
+
+        <g fill="#4fd8e8" opacity=".8">
+          <!-- shared synthetic point cloud (three copies) -->
+          <g id="pts-a">
+            <circle cx="60" cy="180" r="3.5"/><circle cx="90" cy="150" r="3.5"/><circle cx="115" cy="165" r="3.5"/>
+            <circle cx="140" cy="120" r="3.5"/><circle cx="165" cy="135" r="3.5"/><circle cx="190" cy="95" r="3.5"/>
+            <circle cx="215" cy="110" r="3.5"/><circle cx="240" cy="70" r="3.5"/>
+          </g>
+          <g transform="translate(300,0)">
+            <circle cx="60" cy="180" r="3.5"/><circle cx="90" cy="150" r="3.5"/><circle cx="115" cy="165" r="3.5"/>
+            <circle cx="140" cy="120" r="3.5"/><circle cx="165" cy="135" r="3.5"/><circle cx="190" cy="95" r="3.5"/>
+            <circle cx="215" cy="110" r="3.5"/><circle cx="240" cy="70" r="3.5"/>
+          </g>
+          <g transform="translate(600,0)">
+            <circle cx="60" cy="180" r="3.5"/><circle cx="90" cy="150" r="3.5"/><circle cx="115" cy="165" r="3.5"/>
+            <circle cx="140" cy="120" r="3.5"/><circle cx="165" cy="135" r="3.5"/><circle cx="190" cy="95" r="3.5"/>
+            <circle cx="215" cy="110" r="3.5"/><circle cx="240" cy="70" r="3.5"/>
+          </g>
+        </g>
+
+        <!-- underfit: garis lurus dangkal -->
+        <line x1="50" y1="172" x2="250" y2="118" stroke="#ff6f91" stroke-width="2.4"/>
+        <!-- good fit: kurva halus, di panel 2 -->
+        <g transform="translate(300,0)">
+          <path d="M50,182 C110,158 160,120 250,72" fill="none" stroke="#5ce1a6" stroke-width="2.4"/>
+        </g>
+        <!-- overfit: kurva berkelok melewati tiap titik, di panel 3 -->
+        <g transform="translate(600,0)">
+          <path d="M50,186 C66,170 74,152 90,150 C104,148 106,170 115,165 C128,157 132,126 140,120
+                   C148,114 156,142 165,135 C178,124 182,100 190,95 C198,90 206,116 215,110 C228,101 232,76 240,70"
+                fill="none" stroke="#ffb454" stroke-width="2.2"/>
+        </g>
+
+        <g font-family="Inter, sans-serif" font-size="9" fill="#5d6a8a">
+          <text x="150" y="218" text-anchor="middle">error tinggi di train &amp; test</text>
+          <text x="450" y="218" text-anchor="middle">error rendah di train &amp; test</text>
+          <text x="750" y="218" text-anchor="middle">error ~0 di train, tinggi di test</text>
+        </g>
+      </svg>
+
+      <div class="viz-caption">
+        Cara mendeteksinya sederhana: bandingkan kinerja pada data latih dan data uji.
+        Jarak besar antara keduanya adalah tanda overfitting; keduanya buruk berarti underfitting.
+      </div>
+    </div>
+
+    <!-- regresi -->
+    <div class="rule"></div>
+    <h2 class="reveal" data-anim="up" style="font-size:clamp(1.7rem,2.9vw,2.3rem); margin-bottom:.7rem">Evaluasi Model Regresi</h2>
+    <p class="lead reveal" data-anim="up" style="max-width:78ch; margin-bottom:1.8rem">
+      Regresi memprediksi nilai kontinu, sehingga metriknya mengukur <em>seberapa jauh</em> prediksi
+      meleset — dalam satuan asli, satuan kuadrat, atau persentase.
+    </p>
+
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>MAE — Mean Absolute Error</h4>
+        <p class="small">Rata-rata selisih absolut antara nilai sebenarnya dan prediksi.</p>
+        <div class="formula" style="margin:.7rem 0">
+          <span>MAE =</span>
+          <span class="frac"><span class="num">1</span><span class="den">n</span></span>
+          <span>Σ |y<sub>i</sub> − ŷ<sub>i</sub>|</span>
+        </div>
+        <p class="small">
+          Memberi gambaran langsung kesalahan rata-rata <strong>tanpa penalti tambahan</strong> untuk
+          kesalahan besar. Satuannya sama dengan data asli, jadi paling mudah dijelaskan.
+        </p>
+        <p class="small muted">Contoh: harga asli Rp500 juta, prediksi Rp470 juta → error Rp30 juta.</p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>MSE — Mean Squared Error</h4>
+        <p class="small">Rata-rata dari kuadrat selisih prediksi dan nilai aktual.</p>
+        <div class="formula" style="margin:.7rem 0">
+          <span>MSE =</span>
+          <span class="frac"><span class="num">1</span><span class="den">n</span></span>
+          <span>Σ (y<sub>i</sub> − ŷ<sub>i</sub>)²</span>
+        </div>
+        <p class="small">
+          Memberi <strong>penalti lebih besar</strong> untuk kesalahan besar karena dikuadratkan.
+          Cocok ketika Anda ingin model sangat sensitif terhadap prediksi yang meleset jauh.
+        </p>
+        <p class="small muted">Error 2 → 4 · error 5 → 25 · error 20 → 400. Kesalahan besar jadi dominan.</p>
+      </div>
+    </div>
+
+    <!-- worked example -->
+    <div class="viz reveal" data-anim="up" style="margin-bottom:1.4rem">
+      <div class="viz-head">
+        <div class="viz-title">Contoh Perhitungan: Tiga Observasi</div>
+        <div class="viz-note">aktual vs prediksi</div>
+      </div>
+
+      <div class="grid g-2-1" style="align-items:center; gap:1.4rem">
+        <div>
+          <div class="table-wrap">
+            <table class="dt">
+              <thead><tr><th>Aktual</th><th>Prediksi</th><th>Error</th><th>Error²</th><th>|Error|</th></tr></thead>
+              <tbody>
+                <tr><td>100</td><td>90</td><td>10</td><td>100</td><td>10</td></tr>
+                <tr><td>200</td><td>220</td><td>−20</td><td>400</td><td>20</td></tr>
+                <tr><td>300</td><td>290</td><td>10</td><td>100</td><td>10</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="small muted" style="margin-top:.6rem">
+            Total |error| = 40 · Total error² = 600 · n = 3
+          </p>
+        </div>
+
+        <div class="grid" style="gap:.6rem">
+          <div class="stat">
+            <div class="k">MAE = 40 / 3</div>
+            <div class="v" data-count="13.33" data-dec="2">0</div>
+            <p class="tiny muted" style="margin:.2rem 0 0">rata-rata meleset 13,33 satuan</p>
+          </div>
+          <div class="stat">
+            <div class="k">MSE = 600 / 3</div>
+            <div class="v" data-count="200" data-dec="0">0</div>
+            <p class="tiny muted" style="margin:.2rem 0 0">rata-rata kuadrat error</p>
+          </div>
+          <div class="stat">
+            <div class="k">RMSE = √200</div>
+            <div class="v" data-count="14.14" data-dec="2">0</div>
+            <p class="tiny muted" style="margin:.2rem 0 0">kembali ke satuan asli</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="viz-caption">
+        Perhatikan hubungannya: <strong>RMSE ≥ MAE</strong> selalu benar. Jika RMSE jauh lebih tinggi
+        dari MAE, berarti ada beberapa prediksi dengan error sangat besar.
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>RMSE — Root Mean Squared Error</h4>
+        <p class="small">Akar kuadrat MSE, mengembalikan nilai ke satuan target asli.</p>
+        <div class="formula" style="margin:.7rem 0">
+          <span>RMSE = √MSE</span>
+        </div>
+        <p class="small">
+          Keunggulannya: mudah ditafsirkan (rupiah, kilogram, dan seterusnya) tetapi tetap
+          menghukum kesalahan ekstrem lebih berat daripada MAE.
+        </p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>MAPE — Mean Absolute Percentage Error</h4>
+        <p class="small">Rata-rata kesalahan dalam bentuk persentase.</p>
+        <div class="formula" style="margin:.7rem 0; font-size:.86rem">
+          <span>MAPE =</span>
+          <span class="frac"><span class="num">100%</span><span class="den">n</span></span>
+          <span>Σ</span>
+          <span class="frac"><span class="num">|y<sub>i</sub> − ŷ<sub>i</sub>|</span><span class="den">|y<sub>i</sub>|</span></span>
+        </div>
+        <p class="small">
+          Contoh: asli Rp500 juta, prediksi Rp450 juta → |500−450|/500 × 100% = <strong>10%</strong>.
+          Jika rata-rata seluruh data 4,5%, artinya prediksi menyimpang sekitar 4,5% dari nilai sebenarnya.
+        </p>
+        <p class="tiny muted">Hati-hati jika nilai aktual mendekati nol — MAPE bisa meledak.</p>
+      </div>
+    </div>
+
+    <div class="grid g-2-1" style="margin-bottom:2.2rem; align-items:start">
+      <div class="card reveal" data-anim="up">
+        <h4>R² — Koefisien Determinasi</h4>
+        <p class="small">
+          Mengukur <strong>proporsi variansi</strong> data target yang dapat dijelaskan model.
+          Berbeda dari MAE/RMSE: ia tidak mengukur besar error, melainkan seberapa baik model
+          menangkap pola.
+        </p>
+        <div class="formula" style="margin:.7rem 0; font-size:.86rem">
+          <span>R² = 1 −</span>
+          <span class="frac"><span class="num">Σ (y<sub>i</sub> − ŷ<sub>i</sub>)²</span><span class="den">Σ (y<sub>i</sub> − ȳ)²</span></span>
+        </div>
+        <div class="table-wrap" style="margin-top:.6rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Nilai</th><th>Interpretasi</th></tr></thead>
+            <tbody>
+              <tr><td>1.00</td><td>Prediksi sempurna</td></tr>
+              <tr><td>0.90</td><td>Menjelaskan ~90% variasi</td></tr>
+              <tr><td>0.70</td><td>Menjelaskan ~70% variasi</td></tr>
+              <tr><td>0</td><td>Tidak lebih baik dari menebak rata-rata</td></tr>
+              <tr><td>&lt; 0</td><td>Lebih buruk daripada prediksi rata-rata</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Sebaran Nilai R²</div>
+          <div class="viz-note">semakin dekat 1 semakin baik</div>
+        </div>
+        <div class="meter" style="height:12px; margin:1.6rem 0 1.2rem">
+          <i data-meter="92" style="background:linear-gradient(90deg,#4fd8e8,#5ce1a6)"></i>
+        </div>
+        <div class="stat">
+          <div class="k">Contoh kasus</div>
+          <div class="v" style="color:var(--green)">R² = 0.92</div>
+          <p class="tiny muted" style="margin:.3rem 0 0">
+            "Model menjelaskan sekitar 92% variasi harga rumah; 8% sisanya tidak dijelaskan."
+          </p>
+        </div>
+        <div class="callout warn" style="margin-top:.9rem">
+          R² tinggi tidak berarti model sempurna. Selalu laporkan bersama MAE atau RMSE agar
+          besaran error tetap terlihat.
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="table-wrap">
+        <table class="dt">
+          <thead><tr><th>Metrik</th><th>Arah</th><th>Arti Praktis</th><th>Kapan Dipakai</th></tr></thead>
+          <tbody>
+            <tr><td>MAE</td><td>Semakin kecil semakin baik</td><td>Rata-rata besar kesalahan, satuan asli</td><td>Semua kesalahan dianggap sama penting</td></tr>
+            <tr><td>MSE</td><td>Semakin kecil semakin baik</td><td>Rata-rata kesalahan kuadrat</td><td>Butuh penalti besar untuk error besar (optimasi)</td></tr>
+            <tr><td>RMSE</td><td>Semakin kecil semakin baik</td><td>Kesalahan rata-rata dalam satuan asli</td><td>Ingin penalti error besar + mudah ditafsirkan</td></tr>
+            <tr><td>MAPE</td><td>Semakin kecil semakin baik</td><td>Rata-rata kesalahan dalam persen</td><td>Membandingkan skala berbeda / komunikasi bisnis</td></tr>
+            <tr><td>R²</td><td>Mendekati 1 semakin baik</td><td>Proporsi variansi yang dijelaskan</td><td>Menilai daya jelas model terhadap pola data</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="grid g-1-2" style="margin-bottom:2.2rem; align-items:start">
+      <div class="card card-accent reveal" data-anim="up">
+        <h4>Membaca Satu Set Hasil</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Metrik</th><th>Hasil</th></tr></thead>
+            <tbody>
+              <tr><td>MAE</td><td>Rp25 juta</td></tr>
+              <tr><td>MSE</td><td>900</td></tr>
+              <tr><td>RMSE</td><td>Rp30 juta</td></tr>
+              <tr><td>R²</td><td>0,92</td></tr>
+              <tr><td>MAPE</td><td>5,5%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:.6rem">
+          Model memprediksi harga rumah dalam juta rupiah.
+        </p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Interpretasinya</h4>
+        <ul class="clean small">
+          <li><strong>MAE Rp25 juta</strong> — rata-rata prediksi meleset Rp25 juta dari harga sebenarnya.</li>
+          <li><strong>MSE 900</strong> — rata-rata kuadrat kesalahan; lebih berguna untuk perhitungan model daripada interpretasi langsung karena satuannya kuadrat.</li>
+          <li><strong>RMSE Rp30 juta</strong> — kesalahan umum sekitar Rp30 juta, dengan penalti lebih tinggi untuk kesalahan besar. RMSE &gt; MAE menandakan ada beberapa error ekstrem.</li>
+          <li><strong>R² 0,92</strong> — 92% variasi harga dijelaskan oleh fitur seperti luas bangunan, luas tanah, lokasi, dan jumlah kamar.</li>
+          <li><strong>MAPE 5,5%</strong> — jika harga sebenarnya Rp500 juta, rata-rata kesalahan ≈ 500 × 5,5% = Rp27,5 juta.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>regression_metrics.py</div>
+      <pre class="code"><span class="k">from</span> sklearn.metrics <span class="k">import</span> (mean_absolute_error,
+                             mean_squared_error, r2_score)
+
+mae  = <span class="f">mean_absolute_error</span>(y_true, y_pred)
+mse  = <span class="f">mean_squared_error</span>(y_true, y_pred)
+rmse = np.<span class="f">sqrt</span>(mse)
+r2   = <span class="f">r2_score</span>(y_true, y_pred)
+
+<span class="f">print</span>(<span class="s">f"MAE : {mae:.2f}"</span>)
+<span class="f">print</span>(<span class="s">f"MSE : {mse:.2f}"</span>)
+<span class="f">print</span>(<span class="s">f"RMSE: {rmse:.2f}"</span>)
+<span class="f">print</span>(<span class="s">f"R²  : {r2:.4f}"</span>)
+
+<span class="c"># MAPE manual (hindari pembagian nol)</span>
+mask = y_true != 0
+mape = np.<span class="f">mean</span>(np.<span class="f">abs</span>((y_true[mask] - y_pred[mask])
+                    / y_true[mask])) * 100</pre>
+    </div>

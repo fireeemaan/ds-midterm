@@ -1,0 +1,229 @@
+<!-- ============================================================
+     UNIT 2 — DATA SCIENCE METHODOLOGY (IBM / John Rollins)
+     ============================================================ -->
+<section class="unit" id="u2" data-unit="2">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">02</span>
+        <span class="unit-tag">Pertemuan IV<br>Metodologi</span>
+      </div>
+      <h2>Data Science <span class="grad-text">Methodology</span></h2>
+      <p class="lead">
+        Materi ini diadaptasi dari kursus IBM (© IBM 2020) yang disusun dari pengalaman
+        <strong>John Rollins</strong>, seorang senior data scientist di IBM. Tujuannya satu:
+        memastikan data yang dipakai untuk memecahkan masalah <strong>relevan</strong> dan
+        <strong>dimanipulasi dengan benar</strong> agar pertanyaan yang diajukan benar-benar terjawab.
+      </p>
+    </header>
+
+    <div class="callout warn reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <strong>Masalah paling mahal di data science bukan algoritma yang salah, melainkan pertanyaan yang salah.</strong>
+      Rollins menekankan: terlalu sering banyak usaha dicurahkan untuk menjawab apa yang
+      <em>dianggap</em> orang sebagai pertanyaan — metodenya benar, tetapi tidak menyelesaikan masalah sebenarnya.
+    </div>
+
+    <!-- 10 tahap -->
+    <div class="viz reveal" data-anim="up" style="margin-bottom:1.5rem">
+      <div class="viz-head">
+        <div class="viz-title">Sepuluh Tahap Metodologi — dan Sifat Iternya</div>
+        <div class="viz-note">perhatikan panah dua arah: proses ini tidak lurus</div>
+      </div>
+
+      <div class="flowmap" id="flowmap">
+        <div class="flow-row">
+          <div class="flow-node on" data-step="1"><b>01</b>Business<br>understanding</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" data-step="2"><b>02</b>Analytic<br>approach</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" data-step="3"><b>03</b>Data<br>requirements</div>
+          <span class="flow-arrow">↔</span>
+          <div class="flow-node" data-step="4"><b>04</b>Data<br>collection</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" data-step="5"><b>05</b>Data<br>understanding</div>
+        </div>
+
+        <div class="flow-turn">
+          <span class="turn-line"></span>
+          <span class="turn-label">lanjut ke tahap 06 — dan seterusnya, dengan umpan balik ke belakang</span>
+        </div>
+
+        <div class="flow-row">
+          <div class="flow-node" data-step="6"><b>06</b>Data<br>preparation</div>
+          <span class="flow-arrow">↔</span>
+          <div class="flow-node" data-step="7"><b>07</b>Modeling</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" data-step="8"><b>08</b>Evaluation</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" data-step="9"><b>09</b>Deployment</div>
+          <span class="flow-arrow">→</span>
+          <div class="flow-node" data-step="10"><b>10</b>Feedback</div>
+        </div>
+
+        <div class="flow-loop">
+          <span>↺</span> Feedback (10) mengalir kembali ke Modeling (07); Data preparation (06) dan Modeling (07) saling menyesuaikan.
+        </div>
+      </div>
+
+      <div class="viz-caption">
+        Tahap 3↔4 dan 4↔5 berjalan dua arah: kebutuhan data berubah saat kita melihat data,
+        dan pemahaman data berubah saat koleksi berjalan. <strong>Feedback</strong> dari tahap 10
+        mengalir kembali ke <strong>modeling</strong> — model yang sudah dipakai di produksi akan
+        memaksa kita kembali memperbaiki, bukan sekadar selesai.
+      </div>
+    </div>
+
+    <figure class="fig reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <img src="assets/img/method-stages.png" alt="Diagram sepuluh tahap metodologi data science versi IBM">
+      <figcaption><b>Gambar asli materi.</b> Diagram tahapan metodologi dari slide IBM — Business understanding
+        (disorot oranye) → Analytic approach → Data requirements ↔ Data collection ↔ Data understanding →
+        Data preparation ↔ Modeling → Evaluation → Deployment → Feedback → kembali ke Modeling.</figcaption>
+    </figure>
+
+    <!-- tahap 1 & 2 -->
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">TAHAP 01</div>
+        <h4>Business Understanding</h4>
+        <p class="small">
+          Metodologi dimulai dengan meluangkan waktu untuk <strong>mencari klarifikasi</strong>.
+          Klarifikasi diletakkan di awal karena hanya dengan kejelasan masalah kita bisa menentukan
+          data mana yang akan dipakai untuk menjawab pertanyaan inti.
+        </p>
+        <p class="small">
+          Urutannya: pahami <strong>goal</strong> orang yang bertanya → turunkan menjadi
+          <strong>objectives</strong> → pecah objectives menjadi prioritas yang bisa
+          <strong>direncanakan</strong>. Contoh materi: "bagaimana mengurangi biaya aktivitas?"
+          Goal-nya bisa berarti <em>efisiensi</em>, bisa juga <em>profitabilitas</em> — dua hal berbeda
+          dengan solusi berbeda.
+        </p>
+        <div class="split-note" style="margin-top:.9rem">
+          <div>
+            <b>Peran sponsor bisnis</b> sepanjang proyek: menetapkan arah keseluruhan,
+            tetap terlibat memberi panduan, dan memastikan dukungan tersedia saat dibutuhkan.
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-accent v reveal" data-anim="up">
+        <div class="card-num">TAHAP 02</div>
+        <h4>Analytic Approach</h4>
+        <p class="small">
+          Setelah pertanyaan dipahami dengan kuat, pilih pendekatan analitiknya. Intinya:
+          <strong>jenis pola apa</strong> yang dibutuhkan untuk menjawab pertanyaan itu
+          seefektif mungkin.
+        </p>
+        <ul class="clean vi small">
+          <li>Pertanyaan tentang <strong>probabilitas suatu aksi</strong> → model <em>predictive</em>.</li>
+          <li>Pertanyaan tentang <strong>hubungan</strong> → pendekatan <em>descriptive</em>.</li>
+          <li>Pertanyaan yang butuh <strong>jawaban ya/tidak</strong> → <em>classification</em>.</li>
+          <li>Pertanyaan tentang <strong>perilaku manusia</strong> → <em>clustering &amp; association</em>.</li>
+        </ul>
+        <p class="small" style="margin-top:.7rem">
+          Pendekatan yang benar selalu bergantung pada <strong>kebutuhan bisnis</strong> model,
+          bukan pada algoritma yang paling sedang populer.
+        </p>
+      </div>
+    </div>
+
+    <!-- 4 tipe analytics -->
+    <div class="reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <h3 style="margin-bottom:.9rem">Empat Jenis Pendekatan Analitik</h3>
+      <div class="table-wrap">
+        <table class="dt">
+          <thead>
+            <tr><th>Pendekatan</th><th>Pertanyaan yang Dijawab</th><th>Contoh Keluaran</th><th>Teknik Umum</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Descriptive</td><td>Apa status saat ini?</td><td>Ringkasan penjualan bulan ini</td><td>Statistik deskriptif, dashboard, agregasi</td></tr>
+            <tr><td>Diagnostic (Statistical Analysis)</td><td>Apa yang terjadi &amp; mengapa?</td><td>Penyebab penurunan konversi</td><td>Uji hipotesis, analisis korelasi, drill-down</td></tr>
+            <tr><td>Predictive (Forecasting)</td><td>Jika tren berlanjut, apa yang akan terjadi?</td><td>Perkiraan permintaan kuartal depan</td><td>Regresi, klasifikasi, time series</td></tr>
+            <tr><td>Prescriptive</td><td>Bagaimana kita menyelesaikannya?</td><td>Rekomendasi alokasi stok</td><td>Optimasi, simulasi, sistem rekomendasi</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted" style="margin-top:.7rem">
+        Urutan ini juga mencerminkan tingkat kesulitan: descriptive paling mudah, prescriptive paling menuntut
+        karena harus memahami sebab-akibat dan konsekuensi keputusan.
+      </p>
+    </div>
+
+    <figure class="fig reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <img src="assets/img/analytic-types.png" alt="Slide IBM: memilih pendekatan analitik berdasarkan jenis pertanyaan">
+      <figcaption><b>Gambar asli materi.</b> "Pick analytic approach based on type of question" — Descriptive
+        (status saat ini), Diagnostic/Statistical Analysis (apa &amp; mengapa), Predictive/Forecasting
+        (apa berikutnya), Prescriptive (bagaimana menyelesaikannya).</figcaption>
+    </figure>
+
+    <!-- case study -->
+    <div class="grid g-1-2" style="margin-bottom:2.4rem; align-items:start">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">STUDI KASUS</div>
+        <h4>Mengapa Decision Tree Dipilih?</h4>
+        <p class="small">
+          Pada kasus <em>readmission</em> pasien, model klasifikasi decision tree dipakai untuk menemukan
+          kombinasi kondisi yang mengarah pada tiap luaran pasien. Dengan menelusuri variabel di setiap
+          node sepanjang jalur menuju leaf, diperoleh nilai ambang (<em>threshold</em>) tertentu.
+        </p>
+        <ul class="clean gr small">
+          <li>Memberi <strong>luaran prediksi</strong> sekaligus <strong>peluangnya</strong>, berdasarkan proporsi kelas dominan di leaf.</li>
+          <li>Jika kelas dominan "ya", risiko = proporsi "ya" di leaf.</li>
+          <li>Jika kelas dominan "tidak", risiko = 1 − proporsi "tidak" di leaf.</li>
+          <li>Mudah dipahami <strong>non-data-scientist</strong> dan mudah diterapkan untuk memberi skor pasien baru.</li>
+        </ul>
+      </div>
+
+      <figure class="fig reveal" data-anim="up">
+        <img src="assets/img/decision-tree-weather.png" alt="Contoh decision tree klasifikasi cuaca">
+        <figcaption><b>Gambar asli materi.</b> Anatomi decision tree: <em>root node</em> (outlook), <em>split node</em>
+          (humidity, windy), dan <em>leaf node</em> (Y/N). Aturannya: sunny+high → N; sunny+normal → Y;
+          rainy → Y; overcast+tidak berangin → Y; overcast+berangin → N.</figcaption>
+      </figure>
+    </div>
+
+    <!-- tahap 3-10 ringkas -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:1rem">Delapan Tahap Berikutnya, Ringkas</h3>
+    <div class="grid g4" style="margin-bottom:2rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">03</div><h4>Data Requirements</h4>
+        <p class="small">Menentukan data apa yang dibutuhkan: variabel, granularitas, periode, dan kualitas minimum agar pertanyaan bisa dijawab.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">04</div><h4>Data Collection</h4>
+        <p class="small">Mengambil data dari sumbernya — basis data, API, berkas, sensor, survei — dengan izin dan metode yang tepat.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">05</div><h4>Data Understanding</h4>
+        <p class="small">Melihat isi data yang terkumpul: apakah sesuai harapan? Apakah ada nilai hilang, duplikat, atau anomali?</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">06</div><h4>Data Preparation</h4>
+        <p class="small">Membersihkan, mentransformasi, dan menyusun data menjadi bentuk yang siap dimodelkan (sering disebut <em>feature engineering</em>).</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">07</div><h4>Modeling</h4>
+        <p class="small">Memilih dan melatih algoritma. Di sinilah iterasi dengan data preparation paling sering terjadi.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">08</div><h4>Evaluation</h4>
+        <p class="small">Mengukur kinerja pada data yang belum pernah dilihat model, dengan metrik yang sesuai tujuan bisnis.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">09</div><h4>Deployment</h4>
+        <p class="small">Menempatkan model di lingkungan nyata agar memberi nilai — sebagai API, batch scoring, atau fitur produk.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">10</div><h4>Feedback</h4>
+        <p class="small">Memantau performa setelah dipakai. Data berubah, model menua; umpan balik mengarahkan perbaikan berikutnya.</p>
+      </div>
+    </div>
+
+    <div class="callout tip reveal" data-anim="up">
+      <strong>Cara membaca metodologi ini:</strong> jangan perlakukan sebagai checklist satu arah.
+      Ia adalah <em>loop</em>. Kesalahan paling umum pemula adalah melompat langsung ke modeling,
+      lalu bingung ketika hasilnya tidak berguna — padahal masalahnya ada di tahap 1 atau 3.
+    </div>
+
+  </div>
+</section>

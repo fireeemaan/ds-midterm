@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Science — Rangkuman Materi &amp; Visualisasi</title>
+<meta name="description" content="Penjelasan lengkap delapan materi Data Science: sejarah, metodologi, pengumpulan data, EDA, pembersihan data, feature engineering, pembangunan model, dan evaluasi model.">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/sections.css">
+<link rel="stylesheet" href="assets/css/quiz.css">
+<script>
+  window.__errs = [];
+  window.addEventListener('error', function (e) {
+    window.__errs.push((e.message || 'error') + ' @ ' + (e.filename || '?') + ':' + (e.lineno || 0));
+  });
+</script>
+</head>
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <span>DS&nbsp;·&nbsp;MIDTERM</span>
+    </div>
+    <nav class="navlinks" id="navlinks">
+      <a href="#u1">01 Sejarah</a>
+      <a href="#u2">02 Metodologi</a>
+      <a href="#u3">03 Kumpulan Data</a>
+      <a href="#u4">04 EDA &amp; Validasi</a>
+      <a href="#u5">05 Objek &amp; Cleaning</a>
+      <a href="#u6">06 Feature Eng.</a>
+      <a href="#u7">07 Model</a>
+      <a href="#u8">08 Evaluasi</a>
+    </nav>
+    <select class="unit-jump" id="unit-jump" aria-label="Pilih unit">
+      <option value="#top">Ke atas</option>
+      <option value="#u1">01 · Sejarah</option>
+      <option value="#u2">02 · Metodologi</option>
+      <option value="#u3">03 · Mengumpulkan Data</option>
+      <option value="#u4">04 · EDA &amp; Validasi</option>
+      <option value="#u5">05 · Objek &amp; Cleaning</option>
+      <option value="#u6">06 · Feature Engineering</option>
+      <option value="#u7">07 · Membangun Model</option>
+      <option value="#u8">08 · Evaluasi Model</option>
+    </select>
+  </div>
+</header>
+<div class="progress"><div class="progress-fill" id="progress-fill"></div></div>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <canvas class="hero-canvas" id="hero-canvas"></canvas>
+
+  <div class="hero-inner wrap">
+    <div class="eyebrow reveal" data-anim="up">Associate Data Scientist · Rangkuman Materi</div>
+
+    <h1>
+      <span class="hero-line">Data</span>
+      <span class="hero-line grad-text">Science</span>
+    </h1>
+
+    <p class="hero-sub reveal" data-anim="up">
+      Delapan materi, satu alur: dari <em>sejarah</em> dan <em>metodologi</em>, menuju
+      <em>pengumpulan data</em>, <em>eksplorasi</em>, <em>pembersihan</em>,
+      <em>rekayasa fitur</em>, <em>pemodelan</em>, hingga <em>evaluasi</em>.
+      Dijelaskan lengkap, dengan visualisasi yang bergerak mengikuti scroll.
+    </p>
+
+    <div class="reveal" data-anim="up">
+      <a href="#u1" class="hero-cta">
+        Mulai dari Unit 01
+        <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+
+    <dl class="hero-meta reveal" data-anim="up">
+      <div>
+        <dt>Sumber</dt>
+        <dd>8 berkas materi</dd>
+      </div>
+      <div>
+        <dt>Format</dt>
+        <dd>4 PDF · 4 PPTX</dd>
+      </div>
+      <div>
+        <dt>Visualisasi</dt>
+        <dd>GSAP + ScrollTrigger</dd>
+      </div>
+      <div>
+        <dt>Bahasa</dt>
+        <dd>Indonesia</dd>
+      </div>
+    </dl>
+
+    <div class="scroll-cue">
+      <span class="line"></span>
+      <span>gulir</span>
+    </div>
+  </div>
+</section>

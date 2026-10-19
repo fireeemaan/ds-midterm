@@ -1,0 +1,326 @@
+<!-- ============================================================
+     UNIT 3 — DASAR-DASAR DATA SCIENCE / MENGUMPULKAN DATA
+     ============================================================ -->
+<section class="unit" id="u3" data-unit="3">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">03</span>
+        <span class="unit-tag">Judul Unit<br>Mengumpulkan Data</span>
+      </div>
+      <h2>Dasar-Dasar Data Science:<br><span class="grad-text">Mengumpulkan Data</span></h2>
+      <p class="lead">
+        Mengumpulkan data adalah langkah awal yang menentukan kualitas seluruh proyek.
+        Data yang dikumpulkan harus <strong>relevan</strong>, <strong>akurat</strong>, dan
+        <strong>representatif</strong> terhadap masalah yang ingin diselesaikan.
+        Salah di tahap ini, semua tahap berikutnya ikut salah — <em>garbage in, garbage out</em>.
+      </p>
+    </header>
+
+    <!-- peta sumber -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:1rem">Tiga Keluarga Sumber Data</h3>
+
+    <div class="grid g3" style="margin-bottom:1.5rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-icon">🏢</div>
+        <h4>Internal</h4>
+        <p class="small">Data yang dikumpulkan dan disimpan sendiri oleh organisasi. Sangat spesifik dan relevan dengan operasi.</p>
+        <ul class="clean small">
+          <li><strong>Database perusahaan</strong> — penjualan, inventaris, data pelanggan (DBMS).</li>
+          <li><strong>Log sistem</strong> — log server, aplikasi, transaksi.</li>
+          <li><strong>Survei internal</strong> — wawasan karyawan &amp; stakeholder.</li>
+        </ul>
+      </div>
+
+      <div class="card card-accent v reveal" data-anim="up">
+        <div class="card-icon" style="background:rgba(155,123,246,.12);border-color:rgba(155,123,246,.26)">🌐</div>
+        <h4>Eksternal</h4>
+        <p class="small">Data dari luar organisasi; melengkapi data internal dan memberi perspektif lebih luas.</p>
+        <ul class="clean vi small">
+          <li><strong>Data publik</strong> — sensus, cuaca, data ekonomi (pemerintah, non-profit, riset).</li>
+          <li><strong>API</strong> — pengambilan otomatis (mis. OpenWeather, API media sosial).</li>
+          <li><strong>Web scraping</strong> — mengekstrak data halaman web dengan program (mis. harga e-commerce).</li>
+        </ul>
+      </div>
+
+      <div class="card card-accent a reveal" data-anim="up">
+        <div class="card-icon" style="background:rgba(255,180,84,.12);border-color:rgba(255,180,84,.26)">📡</div>
+        <h4>Lainnya</h4>
+        <p class="small">Sumber yang tidak selalu masuk dua kategori di atas, tetapi sering paling kaya.</p>
+        <ul class="clean am small">
+          <li><strong>Data sensor</strong> — IoT, sensor lingkungan, perangkat medis.</li>
+          <li><strong>Data transaksi</strong> — kartu kredit, bank, e-commerce.</li>
+          <li><strong>Data media sosial</strong> — posting, komentar, likes, shares.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid g-2-1" style="margin-bottom:2.4rem; align-items:start">
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Alur Data: dari Sumber ke Keputusan</div>
+          <div class="viz-note">animasi mengikuti scroll</div>
+        </div>
+
+        <svg viewBox="0 0 760 210" id="pipeline-svg" role="img" aria-label="Diagram alur data dari sumber menuju keputusan">
+          <defs>
+            <linearGradient id="pipeGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#4fd8e8"/>
+              <stop offset="50%" stop-color="#9b7bf6"/>
+              <stop offset="100%" stop-color="#ffb454"/>
+            </linearGradient>
+            <marker id="arrowHead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L7,4 L0,8 z" fill="#6d7ba0"/>
+            </marker>
+          </defs>
+
+          <!-- connectors -->
+          <g stroke="#2a3450" stroke-width="2" fill="none">
+            <path d="M150,60 L200,60 L200,92 L250,92" marker-end="url(#arrowHead)"/>
+            <path d="M150,105 L250,105" marker-end="url(#arrowHead)"/>
+            <path d="M150,150 L200,150 L200,118 L250,118" marker-end="url(#arrowHead)"/>
+            <path d="M340,105 L420,105" marker-end="url(#arrowHead)"/>
+            <path d="M510,105 L580,105" marker-end="url(#arrowHead)"/>
+            <path d="M640,85 L640,60 L700,60" marker-end="url(#arrowHead)"/>
+          </g>
+
+          <!-- travelling pulses -->
+          <circle class="pulse" r="3.4" fill="#4fd8e8" cx="160" cy="60"/>
+          <circle class="pulse" r="3.4" fill="#9b7bf6" cx="160" cy="105"/>
+          <circle class="pulse" r="3.4" fill="#ffb454" cx="160" cy="150"/>
+
+          <!-- source boxes -->
+          <g font-family="Inter, sans-serif" font-size="11.5" fill="#b9c4de">
+            <rect x="20" y="44" width="130" height="32" rx="7" fill="#121a30" stroke="#26314f"/>
+            <text x="85" y="64" text-anchor="middle">Internal</text>
+
+            <rect x="20" y="89" width="130" height="32" rx="7" fill="#121a30" stroke="#26314f"/>
+            <text x="85" y="109" text-anchor="middle">Eksternal</text>
+
+            <rect x="20" y="134" width="130" height="32" rx="7" fill="#121a30" stroke="#26314f"/>
+            <text x="85" y="154" text-anchor="middle">Sensor / Transaksi</text>
+          </g>
+
+          <!-- ETL -->
+          <g>
+            <rect x="250" y="80" width="90" height="50" rx="10" fill="rgba(255,180,84,.1)" stroke="rgba(255,180,84,.45)"/>
+            <text x="295" y="101" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="12" fill="#ffb454" font-weight="600">ETL</text>
+            <text x="295" y="116" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" fill="#8492b4">Extract · Transform · Load</text>
+          </g>
+
+          <!-- warehouse -->
+          <g>
+            <rect x="420" y="78" width="90" height="54" rx="10" fill="rgba(79,216,232,.08)" stroke="rgba(79,216,232,.4)"/>
+            <text x="465" y="100" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11" fill="#a9f2fa" font-weight="600">Data</text>
+            <text x="465" y="115" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="11" fill="#a9f2fa" font-weight="600">Warehouse</text>
+          </g>
+
+          <!-- analytics -->
+          <g>
+            <rect x="580" y="80" width="60" height="50" rx="10" fill="rgba(155,123,246,.1)" stroke="rgba(155,123,246,.4)"/>
+            <text x="610" y="100" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#d3c6ff">Analisis</text>
+            <text x="610" y="114" text-anchor="middle" font-family="Inter, sans-serif" font-size="9.5" fill="#d3c6ff">&amp; Model</text>
+          </g>
+
+          <!-- decision -->
+          <g>
+            <rect x="700" y="44" width="52" height="32" rx="8" fill="rgba(92,225,166,.1)" stroke="rgba(92,225,166,.4)"/>
+            <text x="726" y="64" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#a9f5d1">Keputusan</text>
+          </g>
+
+          <text x="20" y="196" font-family="Inter, sans-serif" font-size="9.5" fill="#5d6a8a">Sumber data → ETL → gudang data → analitik → keputusan bisnis</text>
+        </svg>
+
+        <div class="viz-caption">
+          Pola inilah yang membuat data mentah dari banyak sistem bisa dipakai bersama: <strong>ETL</strong>
+          menyamakan format, <strong>data warehouse</strong> menyimpan versi terintegrasi, lalu analitik
+          mengubahnya menjadi keputusan.
+        </div>
+      </div>
+
+      <figure class="fig reveal" data-anim="up">
+        <img src="assets/img/etl-warehouse.png" alt="Diagram ETL, data warehouse, business intelligence dan data science">
+        <figcaption><b>Gambar asli materi.</b> Sumber internal, aplikasi, dan sumber lain → ETL → Data Warehouse →
+          Business Intelligence &amp; Data Science → Decision Making.</figcaption>
+      </figure>
+    </div>
+
+    <!-- proses 4 tahap -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:1rem">Proses Mengumpulkan Data</h3>
+    <div class="grid g4" style="margin-bottom:1.6rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">TAHAP 1</div><h4>Identifikasi Kebutuhan Data</h4>
+        <p class="small">Tentukan apa yang ingin dicapai dan pertanyaan kunci yang harus dijawab, lalu jenis data yang diperlukan.</p>
+        <p class="small muted"><strong>Kuantitatif</strong>: angka (luas rumah, harga). <strong>Kualitatif</strong>: deskriptif/kategori (jenis properti, lokasi).</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">TAHAP 2</div><h4>Identifikasi Sumber Data</h4>
+        <p class="small">Petakan sumber internal, eksternal, dan lainnya. Nilai ketersediaan, biaya akses, dan reliabilitasnya.</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">TAHAP 3</div><h4>Akses &amp; Ekstraksi</h4>
+        <p class="small">Dapatkan izin akses, lalu ekstrak: query SQL, panggilan API (HTTP), atau web scraping (BeautifulSoup/Scrapy).</p>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">TAHAP 4</div><h4>Pembersihan &amp; Validasi</h4>
+        <p class="small">Periksa nilai hilang, duplikat, format tidak konsisten, dan nilai di luar rentang wajar sebelum data dipakai.</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2.4rem">
+      <div class="card reveal" data-anim="up">
+        <h4>Mengapa Tahap Ini Penting?</h4>
+        <ul class="clean small">
+          <li>Pengumpulan data harus <strong>direncanakan</strong> sebagai bagian dari langkah mencapai tujuan — bukan dikerjakan sambil jalan.</li>
+          <li>Hasilnya ikut menentukan <strong>desain proses data warehouse</strong>: skema, granularitas, dan jadwal pemuatan.</li>
+          <li>Kualitas data di hulu menentukan batas maksimum kualitas model di hilir.</li>
+        </ul>
+      </div>
+      <div class="card reveal" data-anim="up">
+        <h4>Format Data yang Umum</h4>
+        <ul class="clean vi small">
+          <li><strong>File lokal</strong> — CSV, Excel, JSON, TXT.</li>
+          <li><strong>Database</strong> — SQL (MySQL, PostgreSQL, SQLite).</li>
+          <li><strong>API</strong> — REST API, web services.</li>
+          <li><strong>Web scraping</strong> — mengambil data dari halaman web.</li>
+          <li><strong>Real-time stream</strong> — data sensor, perangkat IoT.</li>
+          <li><strong>Cloud storage</strong> — AWS S3, Google Drive, dan sejenisnya.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- kode -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:.5rem">Contoh Kode: Lima Cara Memasukkan Data</h3>
+    <p class="small muted reveal" data-anim="up" style="margin-bottom:1.2rem">
+      Semua contoh berikut memakai <span class="mono">pandas</span>. Perhatikan bahwa polanya selalu sama:
+      <em>ambil → muat ke DataFrame → periksa</em>.
+    </p>
+
+    <div class="grid g2" style="margin-bottom:1.2rem">
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>csv_basic.py</div>
+        <pre class="code"><span class="c"># Membuat sample data CSV</span>
+sample_data = {
+    <span class="s">'ID'</span>: [1, 2, 3, 4, 5],
+    <span class="s">'Nama'</span>: [<span class="s">'Budi Santoso'</span>, <span class="s">'Ani Wijaya'</span>, <span class="s">'Citra Dewi'</span>,
+             <span class="s">'Doni Pratama'</span>, <span class="s">'Eka Putri'</span>],
+    <span class="s">'Usia'</span>: [25, 30, 28, 35, 22],
+    <span class="s">'Kota'</span>: [<span class="s">'Jakarta'</span>, <span class="s">'Bandung'</span>, <span class="s">'Surabaya'</span>,
+             <span class="s">'Jakarta'</span>, <span class="s">'Medan'</span>],
+    <span class="s">'Gaji'</span>: [5000000, 7000000, 6500000, 8000000, 4500000]
+}
+df_sample = pd.<span class="f">DataFrame</span>(sample_data)
+df_sample.<span class="f">to_csv</span>(<span class="s">'data_karyawan.csv'</span>, index=<span class="k">False</span>)
+
+<span class="c"># Membaca data dari CSV</span>
+df_karyawan = pd.<span class="f">read_csv</span>(<span class="s">'data_karyawan.csv'</span>)
+<span class="f">print</span>(df_karyawan)
+<span class="f">print</span>(<span class="s">f"Jumlah baris: {len(df_karyawan)}"</span>)
+<span class="f">print</span>(<span class="s">f"Jumlah kolom: {len(df_karyawan.columns)}"</span>)</pre>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>excel_sheets.py</div>
+        <pre class="code"><span class="c"># Excel dengan multiple sheets</span>
+data_q1 = {
+    <span class="s">'Produk'</span>: [<span class="s">'Laptop'</span>, <span class="s">'Mouse'</span>, <span class="s">'Keyboard'</span>, <span class="s">'Monitor'</span>],
+    <span class="s">'Penjualan'</span>: [120, 450, 380, 95],
+    <span class="s">'Revenue'</span>: [180000000, 13500000, 19000000, 47500000]
+}
+data_q2 = {
+    <span class="s">'Produk'</span>: [<span class="s">'Laptop'</span>, <span class="s">'Mouse'</span>, <span class="s">'Keyboard'</span>, <span class="s">'Monitor'</span>],
+    <span class="s">'Penjualan'</span>: [135, 480, 410, 105],
+    <span class="s">'Revenue'</span>: [202500000, 14400000, 20500000, 52500000]
+}
+
+<span class="k">with</span> pd.<span class="f">ExcelWriter</span>(<span class="s">'data_penjualan.xlsx'</span>,
+                   engine=<span class="s">'openpyxl'</span>) <span class="k">as</span> writer:
+    pd.<span class="f">DataFrame</span>(data_q1).<span class="f">to_excel</span>(writer, sheet_name=<span class="s">'Q1'</span>, index=<span class="k">False</span>)
+    pd.<span class="f">DataFrame</span>(data_q2).<span class="f">to_excel</span>(writer, sheet_name=<span class="s">'Q2'</span>, index=<span class="k">False</span>)
+
+<span class="c"># Membaca semua sheet sekaligus</span>
+all_sheets = pd.<span class="f">read_excel</span>(<span class="s">'data_penjualan.xlsx'</span>, sheet_name=<span class="k">None</span>)
+<span class="f">print</span>(<span class="s">f"Sheet tersedia: {list(all_sheets.keys())}"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="grid g2" style="margin-bottom:2.4rem">
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>json_nested.py</div>
+        <pre class="code">data_json = {
+    <span class="s">"metadata"</span>: {<span class="s">"date"</span>: <span class="s">"2025-11-11"</span>, <span class="s">"version"</span>: <span class="s">"1.0"</span>},
+    <span class="s">"customers"</span>: [
+        {<span class="s">"id"</span>: 1, <span class="s">"transactions"</span>: [
+            {<span class="s">"date"</span>: <span class="s">"2025-01-15"</span>, <span class="s">"amount"</span>: 15000000},
+            {<span class="s">"date"</span>: <span class="s">"2025-02-20"</span>, <span class="s">"amount"</span>: 22000000}]},
+        {<span class="s">"id"</span>: 2, <span class="s">"transactions"</span>: [
+            {<span class="s">"date"</span>: <span class="s">"2025-01-10"</span>, <span class="s">"amount"</span>: 8500000},
+            {<span class="s">"date"</span>: <span class="s">"2025-03-05"</span>, <span class="s">"amount"</span>: 12000000}]}
+    ]
+}
+
+<span class="k">with</span> <span class="f">open</span>(<span class="s">'data_customers.json'</span>, <span class="s">'w'</span>) <span class="k">as</span> f:
+    json.<span class="f">dump</span>(data_json, f, indent=4)
+
+<span class="c"># Baca kembali + ratakan struktur bersarang</span>
+<span class="k">with</span> <span class="f">open</span>(<span class="s">'data_customers.json'</span>) <span class="k">as</span> f:
+    loaded = json.<span class="f">load</span>(f)
+
+df_customers = pd.<span class="f">json_normalize</span>(loaded[<span class="s">'customers'</span>])</pre>
+      </div>
+
+      <div class="reveal" data-anim="up">
+        <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>api_request.py</div>
+        <pre class="code"><span class="k">try</span>:
+    url = <span class="s">'https://jsonplaceholder.typicode.com/users'</span>
+    response = requests.<span class="f">get</span>(url, timeout=10)
+
+    <span class="k">if</span> response.status_code == 200:
+        users = response.<span class="f">json</span>()
+        df_users = pd.<span class="f">DataFrame</span>(users)
+        <span class="f">print</span>(<span class="s">"Data berhasil diambil dari API"</span>)
+        <span class="f">print</span>(df_users[[<span class="s">'id'</span>, <span class="s">'name'</span>,
+                            <span class="s">'email'</span>, <span class="s">'phone'</span>]].<span class="f">head</span>())
+    <span class="k">else</span>:
+        <span class="f">print</span>(<span class="s">f"Error: status {response.status_code}"</span>)
+
+<span class="k">except</span> Exception <span class="k">as</span> e:
+    <span class="f">print</span>(<span class="s">f"Error saat mengambil data: {e}"</span>)
+    <span class="f">print</span>(<span class="s">"Pastikan koneksi internet tersedia"</span>)</pre>
+      </div>
+    </div>
+
+    <div class="reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <div class="code-head"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>synthetic_data.py</div>
+      <pre class="code"><span class="c"># Data sintetis untuk latihan / pengujian pipeline</span>
+np.random.<span class="f">seed</span>(42)
+n = 1000
+
+synthetic = {
+    <span class="s">'TransactionID'</span>: <span class="f">range</span>(1, n + 1),
+    <span class="s">'CustomerID'</span>: np.random.<span class="f">randint</span>(1000, 5000, n),
+    <span class="s">'ProductCategory'</span>: np.random.<span class="f">choice</span>(
+        [<span class="s">'Electronics'</span>, <span class="s">'Fashion'</span>, <span class="s">'Food'</span>,
+         <span class="s">'Books'</span>, <span class="s">'Sports'</span>], n),
+    <span class="s">'Amount'</span>: np.random.<span class="f">randint</span>(50000, 5000000, n),
+    <span class="s">'PaymentMethod'</span>: np.random.<span class="f">choice</span>(
+        [<span class="s">'Credit Card'</span>, <span class="s">'Debit Card'</span>,
+         <span class="s">'E-Wallet'</span>, <span class="s">'Transfer'</span>], n),
+    <span class="s">'Rating'</span>: np.random.<span class="f">uniform</span>(1, 5, n).<span class="f">round</span>(1),
+    <span class="s">'Date'</span>: pd.<span class="f">date_range</span>(start=<span class="s">'2024-01-01'</span>,
+                          periods=n, freq=<span class="s">'h'</span>)
+}
+df_synthetic = pd.<span class="f">DataFrame</span>(synthetic)
+<span class="f">print</span>(df_synthetic.<span class="f">head</span>(10))</pre>
+    </div>
+
+    <div class="callout tip reveal" data-anim="up">
+      <strong>Kesimpulan unit ini.</strong> Mengumpulkan data adalah langkah esensial yang melibatkan
+      identifikasi kebutuhan, identifikasi sumber, akses &amp; ekstraksi, serta pembersihan dan validasi.
+      Memilih sumber yang tepat dan metode akses yang sesuai adalah prasyarat agar data yang terkumpul
+      berkualitas tinggi dan relevan dengan tujuan analisis.
+    </div>
+
+  </div>
+</section>

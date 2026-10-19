@@ -1,0 +1,252 @@
+<!-- ============================================================
+     UNIT 4 (bagian 1) — MENELAAH DATA / EDA
+     ============================================================ -->
+<section class="unit" id="u4" data-unit="4">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">04</span>
+        <span class="unit-tag">Judul Unit<br>Menelaah &amp; Memvalidasi</span>
+      </div>
+      <h2>Menelaah Data:<br><span class="grad-text">Exploratory Data Analysis</span></h2>
+      <p class="lead">
+        <strong>EDA</strong> adalah proses awal dalam analisis data untuk memahami struktur, karakteristik,
+        dan pola dalam dataset. Ini langkah penting sebelum analisis lanjut atau pembangunan model —
+        lewat EDA kita mengidentifikasi distribusi, outlier, korelasi, dan anomali.
+      </p>
+    </header>
+
+    <!-- EDA vs preprocessing -->
+    <div class="grid g2" style="margin-bottom:2.2rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">POSISI DALAM ALUR KERJA</div>
+        <h4>EDA vs Preprocessing</h4>
+        <div class="table-wrap" style="margin-top:.6rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Aspek</th><th>EDA</th><th>Preprocessing</th></tr></thead>
+            <tbody>
+              <tr><td>Tujuan</td><td>Memahami &amp; menemukan pola</td><td>Menyiapkan data agar siap model</td></tr>
+              <tr><td>Sifat</td><td>Eksploratif, terbuka</td><td>Transformatif, terarah</td></tr>
+              <tr><td>Keluaran</td><td>Hipotesis, insight, daftar masalah data</td><td>Dataset bersih &amp; ter-transformasi</td></tr>
+              <tr><td>Contoh aksi</td><td>Histogram, korelasi, ringkasan statistik</td><td>Imputasi, encoding, scaling</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:.8rem">
+          Hubungannya bukan "salah satu", melainkan berurutan: EDA memberi tahu <em>apa</em> yang perlu
+          diperbaiki, preprocessing mengerjakannya.
+        </p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">EMPAT TEKNIK</div>
+        <h4>Yang Dilakukan Saat EDA</h4>
+        <ul class="clean small">
+          <li><strong>Statistik deskriptif</strong> — merangkum pusat, sebaran, dan bentuk distribusi.</li>
+          <li><strong>Visualisasi data</strong> — histogram, scatter, box plot, bar, heatmap.</li>
+          <li><strong>Analisis korelasi</strong> — mengukur kekuatan &amp; arah hubungan linier antar variabel.</li>
+          <li><strong>Identifikasi pola &amp; anomali</strong> — termasuk deteksi outlier dengan z-score atau IQR.</li>
+        </ul>
+        <div class="callout" style="margin-top:.9rem">
+          <strong>Aturan praktis:</strong> sebelum menghitung apa pun, lihat dulu bentuk datanya.
+          Rata-rata dari distribusi yang sangat miring bisa menyesatkan; median lebih jujur.
+        </div>
+      </div>
+    </div>
+
+    <!-- statistik deskriptif -->
+    <h3 class="reveal" data-anim="up" style="margin-bottom:1rem">Statistik Deskriptif: Tiga Keluarga Ukuran</h3>
+
+    <div class="grid g3" style="margin-bottom:1.6rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">A · PEMUSATAN</div>
+        <h4>Mean, Median, Modus</h4>
+        <p class="small"><strong>Mean</strong> — jumlah semua nilai dibagi jumlah data.</p>
+        <div class="formula" style="padding:.7rem .5rem; font-size:.8rem">
+          <span>x̄ =</span>
+          <span class="frac"><span class="num">Σ x<sub>i</sub></span><span class="den">n</span></span>
+        </div>
+        <p class="small" style="margin-top:.7rem"><strong>Median</strong> — nilai tengah setelah data diurutkan; tahan terhadap outlier.</p>
+        <p class="small"><strong>Modus</strong> — nilai yang paling sering muncul; bisa unimodal, bimodal, atau multimodal.</p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">B · PENYEBARAN</div>
+        <h4>Range, Variansi, Standar Deviasi, IQR</h4>
+        <p class="small"><strong>Range</strong> = maks − min. Paling sederhana, tetapi sangat dipengaruhi satu nilai ekstrem.</p>
+        <div class="formula" style="padding:.7rem .5rem; font-size:.78rem">
+          <span>s² =</span>
+          <span class="frac"><span class="num">Σ (x<sub>i</sub> − x̄)²</span><span class="den">n − 1</span></span>
+          <span style="margin-left:.6rem">s = √s²</span>
+        </div>
+        <p class="small" style="margin-top:.7rem">
+          <strong>Standar deviasi</strong> punya satuan sama dengan data asli, jadi lebih mudah ditafsirkan
+          daripada variansi (yang satuannya kuadrat).
+        </p>
+        <p class="small"><strong>IQR</strong> = Q3 − Q1, rentang tengah 50% data; dasar deteksi outlier.</p>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">C · BENTUK DISTRIBUSI</div>
+        <h4>Skewness &amp; Kurtosis</h4>
+        <p class="small"><strong>Skewness</strong> mengukur asimetri distribusi:</p>
+        <ul class="clean small">
+          <li><strong>Positif</strong> — ekor memanjang ke kanan; mean &gt; median &gt; modus.</li>
+          <li><strong>Negatif</strong> — ekor memanjang ke kiri; mean &lt; median &lt; modus.</li>
+          <li><strong>Nol</strong> — simetris (seperti distribusi normal); mean = median = modus.</li>
+        </ul>
+        <p class="small muted" style="margin-top:.6rem">
+          <em>Kurtosis</em> mengukur "ketebalan ekor" — seberapa sering nilai ekstrem muncul.
+        </p>
+      </div>
+    </div>
+
+    <!-- skewness visual -->
+    <div class="viz reveal" data-anim="up" style="margin-bottom:2.2rem">
+      <div class="viz-head">
+        <div class="viz-title">Tiga Bentuk Distribusi — dan Posisi Mean vs Median</div>
+        <div class="viz-note">garis putus-putus: posisi mean &amp; median</div>
+      </div>
+
+      <svg viewBox="0 0 900 260" id="skew-svg" role="img" aria-label="Tiga kurva distribusi: skew negatif, simetris, skew positif">
+        <defs>
+          <linearGradient id="skewFillL" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255,111,145,.45)"/>
+            <stop offset="100%" stop-color="rgba(255,111,145,.02)"/>
+          </linearGradient>
+          <linearGradient id="skewFillC" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(79,216,232,.45)"/>
+            <stop offset="100%" stop-color="rgba(79,216,232,.02)"/>
+          </linearGradient>
+          <linearGradient id="skewFillR" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(255,180,84,.45)"/>
+            <stop offset="100%" stop-color="rgba(255,180,84,.02)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- panel labels -->
+        <g font-family="Inter, sans-serif" font-size="11" fill="#8492b4">
+          <text x="150" y="24" text-anchor="middle" fill="#ff6f91" font-weight="600">Skew Negatif</text>
+          <text x="450" y="24" text-anchor="middle" fill="#4fd8e8" font-weight="600">Simetris (Normal)</text>
+          <text x="750" y="24" text-anchor="middle" fill="#ffb454" font-weight="600">Skew Positif</text>
+        </g>
+
+        <!-- baseline -->
+        <g stroke="#26314f" stroke-width="1">
+          <line x1="30" y1="200" x2="270" y2="200"/>
+          <line x1="330" y1="200" x2="570" y2="200"/>
+          <line x1="630" y1="200" x2="870" y2="200"/>
+        </g>
+
+        <!-- left skewed: ekor panjang ke KIRI, puncak di kanan panel -->
+        <path class="skew-path" d="M35,200 C75,198 115,190 148,172 C175,157 192,112 202,74 C206,58 212,48 218,50 C226,56 232,92 240,132 C250,166 260,192 268,200 Z"
+              fill="url(#skewFillL)" stroke="#ff6f91" stroke-width="1.6"/>
+        <!-- normal -->
+        <path class="skew-path" d="M340,200 C370,198 385,150 405,110 C420,80 440,60 450,60 C460,60 480,80 495,110 C515,150 530,198 560,200 Z"
+              fill="url(#skewFillC)" stroke="#4fd8e8" stroke-width="1.6"/>
+        <!-- right skewed: ekor panjang ke KANAN, puncak di kiri panel -->
+        <path class="skew-path" d="M632,200 C638,180 646,130 658,92 C668,62 678,50 688,50 C696,54 704,86 716,120 C734,164 790,190 866,200 Z"
+              fill="url(#skewFillR)" stroke="#ffb454" stroke-width="1.6"/>
+
+        <!-- mean / median markers -->
+        <g stroke-dasharray="4 3" stroke-width="1.2">
+          <line x1="155" y1="96" x2="155" y2="200" stroke="#ff6f91"/>
+          <line x1="185" y1="78" x2="185" y2="200" stroke="#e9eefb" opacity=".65"/>
+          <line x1="450" y1="60" x2="450" y2="200" stroke="#4fd8e8"/>
+          <line x1="450" y1="60" x2="450" y2="200" stroke="#e9eefb" opacity=".65"/>
+          <line x1="765" y1="112" x2="765" y2="200" stroke="#ffb454"/>
+          <line x1="725" y1="86" x2="725" y2="200" stroke="#e9eefb" opacity=".65"/>
+        </g>
+
+        <g font-family="Inter, sans-serif" font-size="9" fill="#5d6a8a">
+          <text x="155" y="216" text-anchor="middle">mean</text>
+          <text x="185" y="216" text-anchor="middle">median</text>
+          <text x="450" y="216" text-anchor="middle">mean = median</text>
+          <text x="725" y="216" text-anchor="middle">median</text>
+          <text x="765" y="216" text-anchor="middle">mean</text>
+        </g>
+      </svg>
+
+      <div class="viz-caption">
+        Pada skew positif, segelintir nilai besar "menarik" mean ke kanan, sementara median tetap dekat
+        ke pusat massa data. Karena itu <strong>median lebih robust</strong> terhadap outlier.
+      </div>
+    </div>
+
+    <!-- boxplot -->
+    <div class="grid g-2-1" style="margin-bottom:2.2rem; align-items:start">
+      <div class="viz reveal" data-anim="up">
+        <div class="viz-head">
+          <div class="viz-title">Box Plot &amp; Lima Statistik</div>
+          <div class="viz-note">IQR = Q3 − Q1</div>
+        </div>
+
+        <svg viewBox="0 0 700 190" id="box-svg" role="img" aria-label="Box plot dengan lima statistik">
+          <line x1="60" y1="120" x2="650" y2="120" stroke="#26314f" stroke-width="1.4"/>
+
+          <!-- whisker line (dua segmen, tidak menembus box) -->
+          <line x1="120" y1="120" x2="230" y2="120" stroke="#5b8cff" stroke-width="1.4" stroke-dasharray="5 4"/>
+          <line x1="450" y1="120" x2="580" y2="120" stroke="#5b8cff" stroke-width="1.4" stroke-dasharray="5 4"/>
+
+          <!-- whisker caps -->
+          <line x1="120" y1="100" x2="120" y2="140" stroke="#5b8cff" stroke-width="2"/>
+          <line x1="580" y1="100" x2="580" y2="140" stroke="#5b8cff" stroke-width="2"/>
+
+          <!-- box -->
+          <rect class="box-rect" x="230" y="82" width="220" height="76" rx="5"
+                fill="rgba(79,216,232,.14)" stroke="#4fd8e8" stroke-width="1.6"/>
+
+          <!-- median -->
+          <line class="median-line" x1="360" y1="82" x2="360" y2="158" stroke="#fff" stroke-width="2.4"/>
+
+          <!-- labels -->
+          <g font-family="Inter, sans-serif" font-size="9.5" fill="#8492b4">
+            <text x="120" y="164" text-anchor="middle">min</text>
+            <text x="230" y="174" text-anchor="middle">Q1</text>
+            <text x="360" y="174" text-anchor="middle" fill="#fff">median</text>
+            <text x="450" y="174" text-anchor="middle">Q3</text>
+            <text x="580" y="164" text-anchor="middle">max</text>
+          </g>
+
+          <!-- IQR bracket -->
+          <g>
+            <line x1="230" y1="62" x2="450" y2="62" stroke="#ffb454" stroke-width="1.4"/>
+            <line x1="230" y1="56" x2="230" y2="68" stroke="#ffb454" stroke-width="1.4"/>
+            <line x1="450" y1="56" x2="450" y2="68" stroke="#ffb454" stroke-width="1.4"/>
+            <text x="340" y="50" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#ffb454">IQR (50% data tengah)</text>
+          </g>
+
+          <!-- outliers -->
+          <g fill="#ff6f91">
+            <circle cx="632" cy="120" r="4"/>
+            <circle cx="655" cy="120" r="4"/>
+          </g>
+          <text x="640" y="100" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#ff6f91">outlier</text>
+        </svg>
+
+        <div class="viz-caption">
+          Box plot merangkum lima statistik: <strong>minimum, Q1, median (Q2), Q3, maksimum</strong>.
+          Nilai di luar pagar <span class="mono">Q1 − 1.5·IQR</span> dan <span class="mono">Q3 + 1.5·IQR</span>
+          ditandai sebagai outlier.
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <h4>Kapan Memakai Ukuran yang Mana?</h4>
+        <div class="table-wrap" style="margin-top:.5rem">
+          <table class="dt" style="min-width:0">
+            <thead><tr><th>Situasi</th><th>Pusat</th><th>Sebaran</th></tr></thead>
+            <tbody>
+              <tr><td>Data simetris, tanpa outlier</td><td>Mean</td><td>Std. deviasi</td></tr>
+              <tr><td>Miring / ada outlier</td><td>Median</td><td>IQR</td></tr>
+              <tr><td>Data kategorikal</td><td>Modus</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:.7rem">
+          Ini bukan aturan kaku, tetapi default yang aman. Selalu laporkan lebih dari satu ukuran
+          ketika data tidak jelas bentuknya.
+        </div>
+      </div>
+    

@@ -1,0 +1,262 @@
+<!-- ============================================================
+     UNIT 1 — SEJARAH & PERKEMBANGAN DATA SCIENCE
+     ============================================================ -->
+<section class="unit" id="u1" data-unit="1">
+  <div class="wrap">
+
+    <header class="unit-head">
+      <div class="unit-index">
+        <span class="unit-num">01</span>
+        <span class="unit-tag">Pertemuan I<br>Sejarah &amp; Perkembangan</span>
+      </div>
+      <h2>Sejarah dan Perkembangan <span class="grad-text">Data Science</span></h2>
+      <p class="lead">
+        Data science bukanlah ilmu yang lahir tiba-tiba. Ia adalah hasil pertemuan panjang antara
+        <strong>statistika</strong>, <strong>ilmu komputer</strong>, dan <strong>kebutuhan nyata manusia</strong>
+        untuk mengambil keputusan berbasis bukti. Memahami sejarahnya membuat kita tahu
+        <em>mengapa</em> tools hari ini berbentuk seperti sekarang — dan ke arah mana bidang ini bergerak.
+      </p>
+    </header>
+
+    <!-- definisi -->
+    <div class="grid g-2-1" style="margin-bottom:2.4rem">
+      <div class="card card-accent reveal" data-anim="up">
+        <div class="card-num">DEFINISI DASAR</div>
+        <h4>Apa itu Data Science?</h4>
+        <p class="small">
+          Data science adalah ilmu yang menggunakan data untuk <strong>mendapatkan wawasan</strong>
+          (<em>insight</em>) dan <strong>membuat keputusan</strong>. Ia menggabungkan berbagai disiplin:
+          statistik, matematika, dan ilmu komputer, lalu ditempelkan pada satu domain masalah
+          (bisnis, kesehatan, pertanian, keuangan, dan seterusnya).
+        </p>
+        <p class="small">
+          Perhatikan kata kuncinya: bukan sekadar "mengolah data", tetapi berakhir pada
+          <strong>keputusan</strong>. Data yang menumpuk tanpa analisis hanyalah biaya penyimpanan.
+        </p>
+        <div class="chiprow" style="margin-top:.9rem">
+          <span class="chip cy">Statistika</span>
+          <span class="chip vi">Ilmu Komputer</span>
+          <span class="chip am">Matematika</span>
+          <span class="chip gr">Domain Bisnis</span>
+          <span class="chip ro">Komunikasi</span>
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">TIGA PILAR</div>
+        <h4>Irisan yang Membentuk Data Science</h4>
+        <ul class="clean small">
+          <li><strong>Statistika</strong> — cara menyimpulkan sesuatu dari sampel, mengukur ketidakpastian, dan menguji hipotesis.</li>
+          <li><strong>Ilmu komputer</strong> — kemampuan menyimpan, memproses, dan menskalakan komputasi atas data besar.</li>
+          <li><strong>Pengetahuan domain</strong> — tahu mana pertanyaan yang layak dijawab dan mana hasil yang masuk akal.</li>
+        </ul>
+        <div class="callout tip" style="margin-top:.9rem">
+          <strong>Catatan penting:</strong> tanpa pilar ketiga, seorang data scientist bisa menghasilkan
+          model yang secara statistik rapi tetapi menjawab pertanyaan yang salah.
+        </div>
+      </div>
+    </div>
+
+    <!-- timeline -->
+    <div class="viz reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <div class="viz-head">
+        <div class="viz-title">Garis Waktu Perkembangan Data Science</div>
+        <div class="viz-note">gulir untuk menelusuri 1960-an → 2020-an</div>
+      </div>
+
+      <div class="timeline-track" id="tl-track">
+        <div class="tl-inner">
+          <div class="tl-rail" id="tl-rail"></div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">1960-an</span>
+          <div class="tl-card">
+            <h4>Era Data &amp; Statistika</h4>
+            <p>Komputer mulai dipakai untuk analisis data. Bahasa <strong>Fortran</strong> lahir untuk komputasi ilmiah. Metode statistik tradisional mendominasi.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">1962</span>
+          <div class="tl-card">
+            <h4>"The Future of Data Analysis"</h4>
+            <p><strong>John W. Tukey</strong> menulis esai yang menggeser fokus statistik dari sekadar pengujian hipotesis menuju <em>eksplorasi data</em>.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">1970-an</span>
+          <div class="tl-card">
+            <h4>Basis Data Relasional</h4>
+            <p><strong>Edgar F. Codd</strong> (1970) memperkenalkan model relasional. <strong>SQL</strong> lahir sebagai bahasa manipulasi data yang bertahan hingga kini.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">1980-an</span>
+          <div class="tl-card">
+            <h4>PC &amp; Tools Statistik</h4>
+            <p>PC mulai dipasarkan massal. Perangkat lunak statistik seperti <strong>SAS</strong> dan <strong>SPSS</strong> membuka analisis data bagi non-programmer.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">1990-an</span>
+          <div class="tl-card">
+            <h4>Warehousing, Mining &amp; Internet</h4>
+            <p>Konsep <strong>data warehouse</strong> diperkenalkan, <strong>data mining</strong> dipakai mengekstrak pola, dan internet memicu ledakan volume data.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">2000-an</span>
+          <div class="tl-card">
+            <h4>Era Big Data</h4>
+            <p>Istilah <strong>"Big Data"</strong> populer (volume, velocity, variety). <strong>Hadoop</strong> memungkinkan pemrosesan data besar secara terdistribusi. Data science menjadi profesi tersendiri.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">2010-an</span>
+          <div class="tl-card">
+            <h4>ML, AI &amp; Cloud</h4>
+            <p><strong>TensorFlow</strong>, <strong>PyTorch</strong>, <strong>scikit-learn</strong>. Cloud (AWS, GCP, Azure) dan alat BI seperti <strong>Tableau</strong> &amp; <strong>Power BI</strong> jadi standar.</p>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <span class="tl-node"></span><span class="tl-year">2020-an</span>
+          <div class="tl-card">
+            <h4>Deep Learning, IoT &amp; Etika</h4>
+            <p>Deep learning merambah visi komputer dan NLP. <strong>Edge computing</strong> &amp; IoT menyatukan data science dengan perangkat fisik. Fokus bergeser ke <strong>privasi</strong>.</p>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      <div class="viz-caption">
+        Sumber: materi <em>1_Sejarah dan Perkembangan Data Science</em>, dilengkapi penelusuran literatur.
+        Tonggak yang sering terlewat: istilah <em>data science</em> sudah dipakai <strong>Peter Naur (1974)</strong>
+        dalam <em>Concise Survey of Computer Methods</em>; <strong>C. F. Jeff Wu (1985)</strong> memakainya sebagai
+        usulan nama baru untuk statistika; dan pada <strong>2012</strong> Davenport &amp; Patil menulis
+        "Data Scientist: The Sexiest Job of the 21st Century" di <em>Harvard Business Review</em>.
+      </div>
+    </div>
+
+    <!-- detail era -->
+    <div class="grid g2" style="margin-bottom:1.4rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">1960-an — 1970-an</div>
+        <h4>Dari Statistik ke Data</h4>
+        <ul class="clean small">
+          <li>Komputer menggeser statistik dari hitung manual menjadi komputasi.</li>
+          <li><strong>Fortran</strong> (1957, dikembangkan 1960-an) menjadi bahasa standar komputasi ilmiah.</li>
+          <li><strong>Codd (1970)</strong> — model relasional: data disimpan sebagai tabel, bukan hirarki kaku.</li>
+          <li><strong>SQL</strong> membuat data bisa ditanyai dengan bahasa deklaratif: "apa yang saya mau", bukan "bagaimana caranya".</li>
+        </ul>
+        <div class="callout" style="margin-top:.85rem">
+          Warisan era ini masih terasa: setiap <span class="mono">SELECT ... WHERE ... GROUP BY</span>
+          yang Anda tulis hari ini adalah turunan langsung dari gagasan Codd.
+        </div>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">1980-an — 1990-an</div>
+        <h4>Demokratisasi &amp; Ledakan Data</h4>
+        <ul class="clean vi small">
+          <li><strong>PC</strong> memindahkan analisis dari mainframe ke meja analis.</li>
+          <li><strong>SAS</strong> dan <strong>SPSS</strong> menyediakan prosedur statistik siap pakai.</li>
+          <li><strong>Data warehousing</strong> — data operasional dipisahkan dari data analitik agar tidak mengganggu sistem transaksi.</li>
+          <li><strong>Data mining</strong> — pola dicari otomatis, bukan hanya diuji manual.</li>
+          <li>Internet memicu pertumbuhan volume data secara eksponensial.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-bottom:2.4rem">
+      <div class="card card-accent v reveal" data-anim="up">
+        <h4>Era Big Data</h4>
+        <p class="small">
+          "Big Data" menggambarkan data yang terlalu besar/cepat/bervariasi untuk ditangani alat lama.
+          <strong>Hadoop</strong> menjawabnya dengan memecah pekerjaan ke banyak mesin
+          (MapReduce + HDFS). Di titik ini data science menjadi disiplin yang terpisah,
+          dan permintaan terhadap <em>data scientist</em> melonjak.
+        </p>
+      </div>
+      <div class="card card-accent a reveal" data-anim="up">
+        <h4>Teknologi &amp; Alat Modern</h4>
+        <p class="small">
+          Machine learning dan AI masuk ke aplikasi sehari-hari. Pustaka seperti
+          <strong>TensorFlow</strong>, <strong>PyTorch</strong>, dan <strong>scikit-learn</strong> membuat model
+          kompleks bisa dibangun dalam hitungan baris. Cloud menyediakan komputasi elastis;
+          Tableau dan Power BI membuat hasil analisis bisa dibaca siapa pun.
+        </p>
+      </div>
+      <div class="card card-accent r reveal" data-anim="up">
+        <h4>Perkembangan Terkini</h4>
+        <p class="small">
+          <strong>Deep learning</strong> mendominasi visi komputer dan NLP. <strong>Edge computing</strong>
+          dan <strong>IoT</strong> memindahkan inferensi ke dekat sumber data. Isu <strong>etika, privasi, dan
+          keamanan data</strong> naik ke permukaan — melahirkan regulasi seperti GDPR di Eropa dan
+          UU Perlindungan Data Pribadi (UU PDP) di Indonesia.
+        </p>
+      </div>
+    </div>
+
+    <!-- tabel tools -->
+    <div class="reveal" data-anim="up" style="margin-bottom:2.4rem">
+      <h3 style="margin-bottom:.9rem">Peta Alat per Zaman</h3>
+      <div class="table-wrap">
+        <table class="dt">
+          <thead>
+            <tr><th>Periode</th><th>Fokus</th><th>Alat / Teknologi</th><th>Keterampilan Kunci</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1960-an</td><td>Komputasi statistik</td><td>Fortran, mainframe</td><td>Metode statistik klasik</td></tr>
+            <tr><td>1970-an</td><td>Penyimpanan terstruktur</td><td>DBMS relasional, SQL</td><td>Perancangan basis data</td></tr>
+            <tr><td>1980-an</td><td>Analisis di meja kerja</td><td>PC, SAS, SPSS</td><td>Interpretasi output statistik</td></tr>
+            <tr><td>1990-an</td><td>Integrasi &amp; penambangan</td><td>Data warehouse, OLAP, data mining</td><td>SQL lanjutan, pemodelan data</td></tr>
+            <tr><td>2000-an</td><td>Skala besar</td><td>Hadoop, MapReduce, NoSQL</td><td>Pemrograman terdistribusi</td></tr>
+            <tr><td>2010-an</td><td>Prediksi &amp; otomasi</td><td>scikit-learn, TensorFlow, PyTorch, cloud, BI</td><td>Machine learning, storytelling data</td></tr>
+            <tr><td>2020-an</td><td>AI terapan &amp; tata kelola</td><td>LLM, MLOps, edge/IoT, AutoML</td><td>Evaluasi model, etika &amp; privasi</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- tren + etika -->
+    <div class="grid g2" style="margin-bottom:1.6rem">
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">TATA KELOLA</div>
+        <h4>Etika, Privasi, dan Regulasi</h4>
+        <p class="small">
+          Semakin banyak keputusan diambil oleh model, semakin besar pula risiko yang menyertainya:
+          bias data, diskriminasi algoritmik, kebocoran data pribadi.
+        </p>
+        <ul class="clean ro small">
+          <li><strong>GDPR</strong> (Eropa, 2018) — hak subjek data: tahu, koreksi, hapus, dan menolak pemrosesan otomatis.</li>
+          <li><strong>UU PDP</strong> (Indonesia, UU No. 27/2022) — dasar hukum pemrosesan data pribadi, kewajiban pemberitahuan kebocoran, dan sanksi.</li>
+          <li><strong>Prinsip minimisasi</strong> — kumpulkan hanya data yang benar-benar diperlukan.</li>
+        </ul>
+      </div>
+
+      <div class="card reveal" data-anim="up">
+        <div class="card-num">KE DEPAN</div>
+        <h4>Tren Masa Depan</h4>
+        <ul class="clean gr small">
+          <li><strong>AI yang lebih cerdas &amp; adaptif</strong> — sistem yang menyesuaikan diri terhadap perubahan pola.</li>
+          <li><strong>Automated Machine Learning (AutoML)</strong> — otomatisasi pemilihan fitur, model, dan hyperparameter.</li>
+          <li><strong>Interdisipliner</strong> — kolaborasi dengan bioteknologi, ekonomi, iklim, dan bidang lain.</li>
+          <li><strong>Quantum computing</strong> — potensi memecahkan masalah optimasi/kombinatorial yang saat ini mustahil.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout key reveal" data-anim="up">
+      <strong>"Lu punya DATA, lu punya KUASA."</strong> — Kalimat penutup materi ini bukan sekadar slogan.
+      Kekuasaan itu netral: ia bisa dipakai untuk mempersempit kesenjangan atau memperlebar bias.
+      Karena itu kompetensi teknis harus selalu berjalan bersama kesadaran etis.
+    </div>
+
+  </div>
+</section>
